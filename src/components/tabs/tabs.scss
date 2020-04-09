@@ -1,9 +1,7 @@
 .nav {
   display: flex;
-  flex-wrap: wrap;
   list-style: none;
   margin: 0;
-  padding-left: 0
 }
 
 .nav-link {
@@ -14,12 +12,6 @@
 .nav-link:focus,
 .nav-link:hover {
   text-decoration: none
-}
-
-.nav-link.disabled {
-  color: #6c757d;
-  cursor: default;
-  pointer-events: none
 }
 
 .nav-tabs {
@@ -41,97 +33,13 @@
   border-color: #e9ecef #e9ecef #dee2e6
 }
 
-.nav-tabs .nav-link.disabled {
-  background-color: transparent;
-  border-color: transparent;
-  color: #6c757d
-}
-
-.nav-tabs .nav-item.show .nav-link,
-.nav-tabs .nav-link.active,
-.nav-tabs .nav-link.btn-loading {
-  background-color: #fff;
-  border-color: #dee2e6 #dee2e6 #fff;
-  color: #495057
-}
-
-.nav-tabs .dropdown-menu {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  margin-top: -1px
-}
-
-.nav-pills .nav-link {
-  border-radius: .25rem
-}
-
-.nav-pills .nav-link.active,
-.nav-pills .nav-link.btn-loading,
-.nav-pills .show>.nav-link {
-  background-color: #26bbed;
-  color: #fff
-}
-
-.nav-fill .nav-item {
-  flex: 1 1 auto;
-  text-align: center
-}
-
-.nav-justified .nav-item {
-  flex-basis: 0;
-  flex-grow: 1;
-  text-align: center
-}
-
-.tab-content>.tab-pane {
-  display: none
-}
-
-.tab-content>.active,
-.tab-content>.btn-loading {
-  display: block
-}
-
-.app-bar {
-  align-items: stretch;
-  border-right: 1.5rem solid #343a40;
-  border-top: .5rem solid #343a40;
-  display: flex;
-  min-height: 4.3rem;
-  position: relative;
-  z-index: 1000
-}
-
-.app-bar-title {
-  background-color: #343a40;
-  flex-grow: 1;
-  font-size: 1.6rem;
-  line-height: 1.5;
-  margin: 0;
-  padding: .5rem 0 0 1rem
-}
-
-.app-bar-title,
-.nav-app .nav-item {
-  box-shadow: 0 1px 0 0 hsla(0, 0%, 100%, .1)
-}
-
 .nav-app .nav-item {
   align-items: center;
   background-color: #484e53;
-  display: flex;
   transition: all .2s ease-in-out
 }
 
-.nav-app .nav-item:not(:first-child) .nav-link {
-  box-shadow: inset 1.5rem 0 1.5rem -1.5rem rgba(0, 0, 0, .35)
-}
-
-.nav-app .nav-item:last-child .nav-link {
-  position: relative
-}
-
-.nav-app .nav-item:last-child .nav-link:after {
+.nav-app .nav-item.active:after {
   box-shadow: inset 1.5rem 0 1.5rem -1.5rem rgba(0, 0, 0, .35);
   content: "";
   display: block;
@@ -143,8 +51,7 @@
 }
 
 .nav-app .nav-item .nav-link,
-.nav-app .nav-item .nav-link.active,
-.nav-app .nav-item .nav-link.btn-loading {
+.nav-app .nav-item .nav-link.active {
   background-color: transparent;
   border: none;
   color: #f8f9fa;
@@ -158,15 +65,13 @@
   background-color: #5d6166
 }
 
-.nav-app .nav-item.active,
-.nav-app .nav-item.btn-loading {
+.nav-app .nav-item.active {
   background-color: transparent;
   box-shadow: inset 0 1px 0 0 hsla(0, 0%, 100%, .1);
   position: relative
 }
 
-.nav-app .nav-item.active:before,
-.nav-app .nav-item.btn-loading:before {
+.nav-app .nav-item.active:before {
   box-shadow: inset -1.5rem 0 1.5rem -1.5rem rgba(0, 0, 0, .35);
   content: "";
   display: block;
@@ -177,12 +82,6 @@
   width: 1.5rem
 }
 
-.nav-app .nav-item.active .nav-link,
-.nav-app .nav-item.btn-loading .nav-link {
-  box-shadow: none
-}
-
-.nav-app .nav-item.active .nav-link:hover,
-.nav-app .nav-item.btn-loading .nav-link:hover {
+.nav-app .nav-item.active .nav-link:hover{
   cursor: default
 }

@@ -8,23 +8,31 @@ const App = () => {
         {
             name: 'World',
             isActive: true,
-            onTabClick: () => {
-                console.log('tab 1')
-            },
         },
         {
             name: 'India',
             isActive: false,
-            onTabClick: () => {
-                console.log('tab 2')
-            },
         },
     ]
+    const [tabsData, setTabsData] = React.useState(tabs)
+
+    const handleTabClick = (tabName) => {
+        setTabsData(
+            tabsData.map((tab) => {
+                return tab.name === tabName ? { name: tab.name, isActive: true } : { name: tab.name, isActive: false }
+            }),
+        )
+    }
+
+    const getActiveTab = () => {
+        return tabsData.find((tab) => tab.isActive).name
+    }
+
     return (
         <>
-            <TabsContainer tabs={tabs} />
+            <TabsContainer tabs={tabsData} onTabClick={handleTabClick} />
             {/*<ShootingStars />*/}
-            <CardsContainer />
+            <CardsContainer activeTab={getActiveTab()} />
         </>
     )
 }

@@ -1,10 +1,9 @@
-const Tab = ({ name, isActive, onTabClick, children }) => {
+const Tab = ({ name, isActive, onTabClick }) => {
     return (
         <li className={`nav-item ${isActive ? 'active' : ''}`}>
-            <button type="button" className={`nav-link ${children ? 'nav-tab-shim' : ''}`} onClick={() => onTabClick()}>
+            <button type="button" className="nav-link" onClick={() => onTabClick(name)}>
                 {name}
             </button>
-            {children}
         </li>
     )
 }
@@ -14,7 +13,6 @@ Tab.propTypes = {
     name: PropTypes.string.isRequired,
     isActive: PropTypes.bool.isRequired,
     onTabClick: PropTypes.func.isRequired,
-    children: PropTypes.node.isRequired,
 }
 
 export default Tab
