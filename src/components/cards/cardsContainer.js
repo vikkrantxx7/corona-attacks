@@ -54,6 +54,23 @@ const CardsContainer = ({ activeTab }) => {
         return Utils.classNames(classes)
     }
 
+    const handleScroll = () => {
+        const progressBar = document.getElementsByClassName('cards-container__progress-bar')[0]
+        const cardsContainer = document.getElementsByClassName('cards-container')[0]
+
+        if (cardsContainer.offsetWidth < 480) {
+            const totalWidth = cardsContainer.scrollWidth - window.innerWidth
+            const progressWidth = (cardsContainer.scrollLeft / totalWidth) * 100
+            progressBar.style.width = `${progressWidth}%`
+            return
+        }
+
+        const totalHeight = cardsContainer.scrollHeight - window.innerHeight
+        const progressHeight = (cardsContainer.scrollTop / totalHeight) * 100
+
+        progressBar.style.height = `${progressHeight}%`
+    }
+
     const renderWorldCards = () => {
         // const flagsData = new Map(
         //     countryFlags.map(({ name, flag }) => [
@@ -73,11 +90,8 @@ const CardsContainer = ({ activeTab }) => {
         stats.splice(index, 1)
         stats.unshift(India)
         return stats.map(({ country, cases, deaths, tests }) => {
-            // const flag = flagsData.get(country.replace(/[. -]/g, '').toLowerCase())
             const flag = countryFlagsData[country]
-            // if (flag) {
-            //     flagsFound = { ...flagsFound, [country]: flag }
-            // }
+
             return (
                 !!flag && (
                     <Card
@@ -91,8 +105,6 @@ const CardsContainer = ({ activeTab }) => {
                 )
             )
         })
-        // console.log(flagsFound)
-        // return cards
     }
 
     const renderIndiaCards = () => {
@@ -109,8 +121,10 @@ const CardsContainer = ({ activeTab }) => {
     }
 
     return (
-        <div className={getClasses()}>
+        <div className={getClasses()} onScroll={handleScroll}>
             {isLoading && <CradleLoader />}
+            {!isLoading && <div className="cards-container__progress-bar" />}
+            {!isLoading && <div className="cards-container__scroll-path" />}
             {!isLoading && activeTab === 'World' && renderWorldCards()}
             {!isLoading && activeTab === 'India' && renderIndiaCards()}
         </div>

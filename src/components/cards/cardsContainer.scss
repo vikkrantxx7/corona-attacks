@@ -5,25 +5,10 @@
   flex-wrap: wrap;
   justify-content: center;
   overflow-y: hidden;
+  scrollbar-width: none;
 
   &::-webkit-scrollbar {
-    width: 20px;
-  }
-
-  &::-webkit-scrollbar-track
-  {
-    border-radius: 10px;
-    box-shadow: inset 0 0 6px rgba(0,0,0,1);
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-image: -webkit-gradient(linear,
-            left bottom,
-            left top,
-            color-stop(0.24, rgb(122,153,217)),
-            color-stop(0.52, rgb(73,125,189)),
-            color-stop(0.66, rgb(28,58,148)));;
-    border-radius: 15px;
+    width: 0;
   }
 
   @media only screen and (min-width: 480px) {
@@ -91,5 +76,94 @@
     margin-top: 30px;
     margin-bottom: 0;
     padding-left: 10px;
+  }
+}
+
+.cards-container__scroll-path {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.07);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
+
+  @media screen and (min-width: 480px) {
+    top: 0;
+    right: 0;
+    bottom: unset;
+    left: unset;
+    width: 10px;
+    height: 100%;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.cards-container__progress-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 10px;
+  background: linear-gradient(to right, #008aff, #00ffe7);
+  animation: animate 5s linear infinite;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    height: 10px;
+    width: 100%;
+    background: linear-gradient(to right, #008aff, #00ffe7);
+    filter: blur(10px);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #008aff, #00ffe7);
+    filter: blur(30px);
+  }
+
+  @media screen and (min-width: 480px) {
+    top: 0;
+    right: 0;
+    bottom: unset;
+    left: unset;
+    width: 10px;
+    background: linear-gradient(to bottom, #008aff, #00ffe7);
+
+    &:before {
+      bottom: unset;
+      right: unset;
+      top: 0;
+      left: 0;
+      width: 10px;
+      height: 100%;
+      background: linear-gradient(to bottom, #008aff, #00ffe7);
+    }
+
+    &:after {
+      bottom: unset;
+      right: unset;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(to bottom, #008aff, #00ffe7);
+    }
+  }
+}
+
+@keyframes animate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
   }
 }
