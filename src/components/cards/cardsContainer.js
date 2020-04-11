@@ -7,6 +7,7 @@ import Utils from '../../utils/utils.js'
 const CardsContainer = ({ activeTab, sort }) => {
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
     const [indiaCoronaStats, setIndiaCoronaStats] = React.useState({})
+    const [statesCoronaStats, setStatesCoronaStats] = React.useState(new Map())
     const [isLoading, setIsLoading] = React.useState(true)
     // const [countryFlags, setCountryFlags] = React.useState([])
 
@@ -38,35 +39,47 @@ const CardsContainer = ({ activeTab, sort }) => {
 
         Promise.all([fetchWorldCoronaStats(), fetchIndiaCoronaStats()]).then(([{ data: stats }, { data: India }]) => {
             // fetchWorldCoronaStats().then(({ data: stats }) => {
-            setWorldCoronaStats(stats.response)
-            setIndiaCoronaStats(India)
-            // setCountryFlags(flags)
+            setWorldCoronaStats(stats.response.sort((a, b) => b.cases.total - a.cases.total))
+            setIndiaCoronaStats(India.total_values)
+            setStatesCoronaStats(new Map(Object.entries(India.state_wise)))
             setIsLoading(false)
+            // setCountryFlags(flags)
         })
     }, [])
 
     React.useEffect(() => {
-        if (sort === 'top') {
+        if (activeTab === 'World') {
             const worldStats = [...worldCoronaStats]
-            worldStats.sort((a, b) => b.cases.total - a.cases.total)
-            if (activeTab === 'India') {
-                const indiaStats = Object.entries(indiaCoronaStats.state_wise)
-                indiaStats.sort((a, b) => a[1].confirmed - b[1].confirmed)
-                // [...indiaCoronaStats].sort((a, b) => b.cases.total - a.cases.total)
-                setIndiaCoronaStats(indiaCoronaStats)
-                return
+
+            if (sort.name === 'cases') {
+                if (sort.isDescending) {
+                    worldStats.sort((a, b) => b.cases.total - a.cases.total)
+                } else {
+                    worldStats.sort((a, b) => a.cases.total - b.cases.total)
+                }
+            } else if (sort.isDescending) {
+                worldStats.sort((a, b) => b.deaths.total - a.deaths.total)
+            } else {
+                worldStats.sort((a, b) => a.deaths.total - b.deaths.total)
             }
             setWorldCoronaStats(worldStats)
-        } else if (sort === 'bottom') {
-            const worldStats = [...worldCoronaStats]
-            worldStats.sort((a, b) => a.cases.total - b.cases.total)
-            if (activeTab === 'India') {
-                sortedTop = indiaCoronaStats.sort((a, b) => a.cases.total - b.cases.total)
-                setIndiaCoronaStats(sortedTop)
-                return
-            }
-            setWorldCoronaStats(worldStats)
+            return
         }
+
+        const statesData = [...statesCoronaStats.entries()]
+
+        if (sort.name === 'cases') {
+            if (sort.isDescending) {
+                statesData.sort((a, b) => b[1].confirmed - a[1].confirmed)
+            } else {
+                statesData.sort((a, b) => a[1].confirmed - b[1].confirmed)
+            }
+        } else if (sort.isDescending) {
+            statesData.sort((a, b) => b[1].deaths - a[1].deaths)
+        } else {
+            statesData.sort((a, b) => a[1].deaths - b[1].deaths)
+        }
+        setStatesCoronaStats(new Map(statesData))
     }, [sort])
 
     const getClasses = () => {
@@ -132,16 +145,18 @@ const CardsContainer = ({ activeTab, sort }) => {
     }
 
     const renderIndiaCards = () => {
-        const states = indiaCoronaStats.state_wise
-        return Object.keys(states).map((state) => (
-            <Card
-                key={states[state].state}
-                name={states[state].state}
-                cases={states[state].confirmed}
-                deaths={states[state].deaths}
-                recoveries={states[state].recovered}
-            />
-        ))
+        return [...statesCoronaStats.keys()].map((state) => {
+            const stateData = statesCoronaStats.get(state)
+            return (
+                <Card
+                    key={stateData.state}
+                    name={stateData.state}
+                    cases={stateData.confirmed}
+                    deaths={stateData.deaths}
+                    recoveries={stateData.recovered}
+                />
+            )
+        })
     }
 
     return (
@@ -158,7 +173,10 @@ const CardsContainer = ({ activeTab, sort }) => {
 CardsContainer.displayName = 'CardsContainer'
 CardsContainer.propTypes = {
     activeTab: PropTypes.string.isRequired,
-    sort: PropTypes.string.isRequired,
+    sort: PropTypes.shape({
+        name: PropTypes.string,
+        isDescending: PropTypes.bool,
+    }).isRequired,
 }
 
 export default CardsContainer

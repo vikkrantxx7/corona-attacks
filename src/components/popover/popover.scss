@@ -52,10 +52,6 @@
 
   span {
     padding: 10px;
-
-    //&:hover {
-    //  letter-spacing: 1px;
-    //}
   }
 }
 
@@ -64,16 +60,22 @@
   flex-direction: column;
   position: fixed;
   padding: 0;
+  border-radius: 10px;
   background: #333;
   box-shadow: 2px 2px 3px rgba(0 ,0, 0, 0.3);
   text-align: center;
   font-size: 16px;
 
-  &:last-child {
+  input {
     margin-bottom: 10px;
+    text-align: center;
+
+    &::placeholder {
+      text-align: center;
+    }
   }
 
-  * {
+  > * {
     height: 30px;
     width: 100%;
     border: 0;
@@ -87,6 +89,10 @@
       background-color: #5d6166;
       text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.84);
       letter-spacing: 1px;
+
+      svg {
+        filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.84));
+      }
     }
   }
 

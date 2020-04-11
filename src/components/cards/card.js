@@ -1,4 +1,3 @@
-import ShootingStars from '../shootingStars/shootingStars.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSkullCrossbones, faBriefcaseMedical, faVial, faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons'
 
@@ -28,7 +27,6 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
                     {tests?.toLocaleString()}
                 </li>}
             </ul>
-            {/*<ShootingStars />*/}
         </div>
     )
 }
