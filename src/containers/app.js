@@ -1,6 +1,7 @@
 import '../index/index.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
+import { DebounceInput } from 'react-debounce-input'
 import TabsContainer from '../components/tabs/tabsContainer.js'
 import CardsContainer from '../components/cards/cardsContainer.js'
 import Popover from '../components/popover/popover.js'
@@ -18,6 +19,7 @@ const App = () => {
     ]
     const [tabsData, setTabsData] = React.useState(tabs)
     const [sort, setSort] = React.useState({ name: 'cases', isDescending: true })
+    const [search, setSearch] = React.useState('')
 
     const handleCasesSort = () => {
         setSort({ name: 'cases', isDescending: sort.name === 'cases' ? !sort.isDescending : true })
@@ -34,6 +36,12 @@ const App = () => {
             }),
         )
         setSort({ name: 'cases', isDescending: true })
+        setSearch('')
+    }
+
+    const handleSearch = (event) => {
+        const { value } = event.target
+        setSearch(value)
     }
 
     const getActiveTab = () => {
@@ -57,10 +65,10 @@ const App = () => {
                             <FontAwesomeIcon icon={sort.isDescending ? faAngleDoubleDown : faAngleDoubleUp} size="sm" />
                         )}
                     </button>
-                    <input type="text" pattern="" placeholder="Search" />
+                    <DebounceInput onChange={handleSearch} placeholder="Search" debounceTimeout={400} value={search} />
                 </Popover>
             </div>
-            <CardsContainer activeTab={getActiveTab()} sort={sort} />
+            <CardsContainer activeTab={getActiveTab()} sort={sort} search={search} />
         </>
     )
 }

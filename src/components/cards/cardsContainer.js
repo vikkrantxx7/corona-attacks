@@ -4,10 +4,12 @@ import Card from './card.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
 import Utils from '../../utils/utils.js'
 
-const CardsContainer = ({ activeTab, sort }) => {
+const CardsContainer = ({ activeTab, sort, search }) => {
+    const [worldFixedStats, setWorldFixedStats] = React.useState([])
+    const [statesFixedStats, setStatesFixedStats] = React.useState(new Map())
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
-    const [indiaCoronaStats, setIndiaCoronaStats] = React.useState({})
     const [statesCoronaStats, setStatesCoronaStats] = React.useState(new Map())
+    const [indiaCoronaStats, setIndiaCoronaStats] = React.useState({})
     const [isLoading, setIsLoading] = React.useState(true)
     // const [countryFlags, setCountryFlags] = React.useState([])
 
@@ -39,9 +41,14 @@ const CardsContainer = ({ activeTab, sort }) => {
 
         Promise.all([fetchWorldCoronaStats(), fetchIndiaCoronaStats()]).then(([{ data: stats }, { data: India }]) => {
             // fetchWorldCoronaStats().then(({ data: stats }) => {
-            setWorldCoronaStats(stats.response.sort((a, b) => b.cases.total - a.cases.total))
+            const worldStats = stats.response.sort((a, b) => b.cases.total - a.cases.total)
+            const statesStats = new Map(Object.entries(India.state_wise))
+
+            setWorldFixedStats(worldStats)
+            setStatesFixedStats(statesStats)
+            setWorldCoronaStats(worldStats)
+            setStatesCoronaStats(statesStats)
             setIndiaCoronaStats(India.total_values)
-            setStatesCoronaStats(new Map(Object.entries(India.state_wise)))
             setIsLoading(false)
             // setCountryFlags(flags)
         })
@@ -49,8 +56,13 @@ const CardsContainer = ({ activeTab, sort }) => {
 
     React.useEffect(() => {
         if (activeTab === 'World') {
-            const worldStats = [...worldCoronaStats]
+            let worldStats = [...worldCoronaStats].filter((item) =>
+                item.country.toLowerCase().includes(search.toLowerCase()),
+            )
 
+            if (!search) {
+                worldStats = [...worldFixedStats]
+            }
             if (sort.name === 'cases') {
                 if (sort.isDescending) {
                     worldStats.sort((a, b) => b.cases.total - a.cases.total)
@@ -66,8 +78,13 @@ const CardsContainer = ({ activeTab, sort }) => {
             return
         }
 
-        const statesData = [...statesCoronaStats.entries()]
+        let statesData = [...statesCoronaStats.entries()].filter((item) =>
+            item[0].toLowerCase().includes(search.toLowerCase()),
+        )
 
+        if (!search) {
+            statesData = [...statesFixedStats]
+        }
         if (sort.name === 'cases') {
             if (sort.isDescending) {
                 statesData.sort((a, b) => b[1].confirmed - a[1].confirmed)
@@ -80,7 +97,7 @@ const CardsContainer = ({ activeTab, sort }) => {
             statesData.sort((a, b) => a[1].deaths - b[1].deaths)
         }
         setStatesCoronaStats(new Map(statesData))
-    }, [sort])
+    }, [sort, search])
 
     const getClasses = () => {
         const classes = new Map([
@@ -177,6 +194,7 @@ CardsContainer.propTypes = {
         name: PropTypes.string,
         isDescending: PropTypes.bool,
     }).isRequired,
+    search: PropTypes.string.isRequired,
 }
 
 export default CardsContainer
