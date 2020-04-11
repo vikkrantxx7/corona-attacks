@@ -4,11 +4,11 @@ import Card from './card.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
 import Utils from '../../utils/utils.js'
 
-const CardsContainer = ({ activeTab }) => {
+const CardsContainer = ({ activeTab, sort }) => {
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
     const [indiaCoronaStats, setIndiaCoronaStats] = React.useState({})
-    // const [countryFlags, setCountryFlags] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
+    // const [countryFlags, setCountryFlags] = React.useState([])
 
     React.useEffect(() => {
         const fetchWorldCoronaStats = () => {
@@ -44,6 +44,30 @@ const CardsContainer = ({ activeTab }) => {
             setIsLoading(false)
         })
     }, [])
+
+    React.useEffect(() => {
+        if (sort === 'top') {
+            const worldStats = [...worldCoronaStats]
+            worldStats.sort((a, b) => b.cases.total - a.cases.total)
+            if (activeTab === 'India') {
+                const indiaStats = Object.entries(indiaCoronaStats.state_wise)
+                indiaStats.sort((a, b) => a[1].confirmed - b[1].confirmed)
+                // [...indiaCoronaStats].sort((a, b) => b.cases.total - a.cases.total)
+                setIndiaCoronaStats(indiaCoronaStats)
+                return
+            }
+            setWorldCoronaStats(worldStats)
+        } else if (sort === 'bottom') {
+            const worldStats = [...worldCoronaStats]
+            worldStats.sort((a, b) => a.cases.total - b.cases.total)
+            if (activeTab === 'India') {
+                sortedTop = indiaCoronaStats.sort((a, b) => a.cases.total - b.cases.total)
+                setIndiaCoronaStats(sortedTop)
+                return
+            }
+            setWorldCoronaStats(worldStats)
+        }
+    }, [sort])
 
     const getClasses = () => {
         const classes = new Map([
@@ -83,13 +107,13 @@ const CardsContainer = ({ activeTab }) => {
         // )
         // let flagsFound = {}
         // console.log(flagsData)
-        const stats = [...worldCoronaStats]
-        const index = stats.findIndex((item) => item.country.toUpperCase() === 'INDIA')
-        const India = stats[index]
-
-        stats.splice(index, 1)
-        stats.unshift(India)
-        return stats.map(({ country, cases, deaths, tests }) => {
+        // const stats = [...worldCoronaStats]
+        // const index = stats.findIndex((item) => item.country.toUpperCase() === 'INDIA')
+        // const India = stats[index]
+        //
+        // stats.splice(index, 1)
+        // stats.unshift(India)
+        return worldCoronaStats.map(({ country, cases, deaths, tests }) => {
             const flag = countryFlagsData[country]
 
             return (
@@ -134,6 +158,7 @@ const CardsContainer = ({ activeTab }) => {
 CardsContainer.displayName = 'CardsContainer'
 CardsContainer.propTypes = {
     activeTab: PropTypes.string.isRequired,
+    sort: PropTypes.string.isRequired,
 }
 
 export default CardsContainer
