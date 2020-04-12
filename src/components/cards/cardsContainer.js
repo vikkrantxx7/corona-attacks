@@ -4,7 +4,7 @@ import Card from './card.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
 import Utils from '../../utils/utils.js'
 
-const CardsContainer = ({ activeTab, sort, search }) => {
+const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     const [worldFixedStats, setWorldFixedStats] = React.useState([])
     const [statesFixedStats, setStatesFixedStats] = React.useState(new Map())
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
@@ -44,6 +44,18 @@ const CardsContainer = ({ activeTab, sort, search }) => {
             const worldStats = stats.response.sort((a, b) => b.cases.total - a.cases.total)
             const statesStats = new Map(Object.entries(India.state_wise))
 
+            setTotals({
+                World: {
+                    cases: worldStats[0].cases.total,
+                    deaths: worldStats[0].deaths.total,
+                    recoveries: worldStats[0].cases.recovered,
+                },
+                India: {
+                    cases: India.total_values.confirmed,
+                    deaths: India.total_values.deaths,
+                    recoveries: India.total_values.recovered,
+                },
+            })
             setWorldFixedStats(worldStats)
             setStatesFixedStats(statesStats)
             setWorldCoronaStats(worldStats)
@@ -195,6 +207,7 @@ CardsContainer.propTypes = {
         isDescending: PropTypes.bool,
     }).isRequired,
     search: PropTypes.string.isRequired,
+    setTotals: PropTypes.func.isRequired,
 }
 
 export default CardsContainer

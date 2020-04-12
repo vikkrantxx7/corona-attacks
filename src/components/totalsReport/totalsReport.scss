@@ -1,0 +1,50 @@
+.totals-report {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-around;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+  }
+
+  span {
+    display: inline-block;
+    width: 100%;
+    align-self: center;
+    font-family: 'Acme', Consolas, sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: antiquewhite;
+    padding: 3px;
+    border-color: white;
+    border-width: 1px;
+    border-style: dashed;
+    background-color: #6455556b;
+    text-align: center;
+
+    &:first-child {
+      border-bottom-width: 0;
+    }
+
+    &:last-child {
+      border-top-width: 0;
+    }
+
+    @media screen and (min-width: 768px) {
+      width: auto;
+      font-size: 15px;
+      letter-spacing: 0;
+
+      &:first-child {
+        border-bottom-width: 1px;
+      }
+
+      &:last-child {
+        border-top-width: 1px;
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
 import './popover.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCaretSquareDown } from '@fortawesome/free-regular-svg-icons'
+import { faCaretSquareDown, faCaretSquareUp } from '@fortawesome/free-regular-svg-icons'
 import PopoverPortal from './components/popoverPortal.js'
 import Utils from '../../utils/utils.js'
 
@@ -40,7 +40,7 @@ const Popover = (props) => {
         <div className="popover" ref={popoverRef}>
             <button className={getButtonClasses()} type="button" onClick={togglePopover}>
                 <span>{isVisible ? 'Less' : 'More'}</span>
-                <FontAwesomeIcon icon={faCaretSquareDown} size="2x" rotation={isVisible ? 180 : 0} />
+                <FontAwesomeIcon icon={isVisible ? faCaretSquareUp : faCaretSquareDown} size="2x" />
             </button>
             {isVisible && (
                 <PopoverPortal>

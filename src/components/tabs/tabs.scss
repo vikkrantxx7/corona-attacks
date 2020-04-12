@@ -1,12 +1,13 @@
 .nav {
   display: flex;
   list-style: none;
+  padding-left: 25px;
   margin: 0;
 }
 
 .nav-link {
   display: block;
-  padding: 1rem 2rem;
+  padding: 1rem;
   background-color: transparent;
   border: none;
   color: #f8f9fa;
@@ -20,9 +21,14 @@
   &:hover {
     text-decoration: none;
   }
+
+  @media screen and (min-width: 768px) {
+    padding: 1rem 2rem;
+  }
 }
 
 .nav-item {
+  display: flex;
   align-items: center;
   background-color: #484e53;
   transition: all .2s ease-in-out;
