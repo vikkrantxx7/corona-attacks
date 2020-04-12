@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSkullCrossbones, faBriefcaseMedical, faVial, faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons'
+import { labels } from './cardsConstants.js'
 import Utils from '../../utils/utils.js'
 
 const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
@@ -18,22 +19,22 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
             <ul className={getClasses()}>
                 <li>
                     <FontAwesomeIcon icon={faBriefcaseMedical} size="sm" />
-                    {'\xa0\xa0Cases:\xa0\xa0'}
+                    {labels.cases}
                     {cases?.toLocaleString()}
                 </li>
                 <li>
                     <FontAwesomeIcon icon={faSkullCrossbones} size="sm" />
-                    {'\xa0\xa0Deaths:\xa0\xa0'}
+                    {labels.deaths}
                     {deaths?.toLocaleString() || 'NA'}
                 </li>
                 {recoveries && <li>
                     <FontAwesomeIcon icon={faHandHoldingHeart} size="sm" />
-                    {'\xa0\xa0Recoveries:\xa0\xa0'}
+                    {labels.recoveries}
                     {recoveries?.toLocaleString() || 'NA'}
                 </li>}
                 {tests && <li>
                     <FontAwesomeIcon icon={faVial} size="sm" />
-                    {'\xa0\xa0Tests:\xa0\xa0'}
+                    {labels.tests}
                     {tests?.toLocaleString()}
                 </li>}
             </ul>

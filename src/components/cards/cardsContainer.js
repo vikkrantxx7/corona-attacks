@@ -1,4 +1,6 @@
 import './cardsContainer.scss'
+import { data, TabName } from '../../containers/appConstants.js'
+import { RapidAPI } from './cardsConstants.js'
 import countryFlagsData from '../../data/countrieFlags.json'
 import Card from './card.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
@@ -10,36 +12,27 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
     const [statesCoronaStats, setStatesCoronaStats] = React.useState(new Map())
     const [isLoading, setIsLoading] = React.useState(true)
-    // const [countryFlags, setCountryFlags] = React.useState([])
 
     React.useEffect(() => {
         const fetchWorldCoronaStats = () => {
-            return Axios.get('https://covid-193.p.rapidapi.com/statistics', {
+            return Axios.get(RapidAPI.World.url, {
                 headers: {
-                    'x-rapidapi-host': 'covid-193.p.rapidapi.com',
-                    'x-rapidapi-key': '0dc4dc7910msh2f47a2af13bd0c8p1b95a5jsn3acdf8a3b471',
+                    'x-rapidapi-host': RapidAPI.World.host,
+                    'x-rapidapi-key': RapidAPI.Key,
                 },
             })
         }
 
         const fetchIndiaCoronaStats = () => {
-            return Axios.get('https://corona-virus-world-and-india-data.p.rapidapi.com/api_india', {
+            return Axios.get(RapidAPI.India.url, {
                 headers: {
-                    'x-rapidapi-host': 'corona-virus-world-and-india-data.p.rapidapi.com',
-                    'x-rapidapi-key': '0dc4dc7910msh2f47a2af13bd0c8p1b95a5jsn3acdf8a3b471',
+                    'x-rapidapi-host': RapidAPI.India.host,
+                    'x-rapidapi-key': RapidAPI.Key,
                 },
             })
         }
-        // const fetchCountryFlags = () => {
-        //     return Axios.get('https://restcountries.eu/rest/v2/all', {
-        //         params: {
-        //             fields: 'name;flag',
-        //         },
-        //     })
-        // }
 
         Promise.all([fetchWorldCoronaStats(), fetchIndiaCoronaStats()]).then(([{ data: stats }, { data: India }]) => {
-            // fetchWorldCoronaStats().then(({ data: stats }) => {
             const worldStats = stats.response.sort((a, b) => b.cases.total - a.cases.total)
             const statesStats = new Map(Object.entries(India.state_wise))
 
@@ -60,12 +53,11 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             setWorldCoronaStats(worldStats)
             setStatesCoronaStats(statesStats)
             setIsLoading(false)
-            // setCountryFlags(flags)
         })
     }, [])
 
     React.useEffect(() => {
-        if (activeTab === 'World') {
+        if (activeTab === TabName.World) {
             let worldStats = [...worldCoronaStats].filter((item) =>
                 item.country.toLowerCase().includes(search.toLowerCase()),
             )
@@ -73,7 +65,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             if (!search) {
                 worldStats = [...worldFixedStats]
             }
-            if (sort.name === 'cases') {
+            if (sort.name === data.cases) {
                 if (sort.isDescending) {
                     worldStats.sort((a, b) => b.cases.total - a.cases.total)
                 } else {
@@ -95,7 +87,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
         if (!search) {
             statesData = [...statesFixedStats]
         }
-        if (sort.name === 'cases') {
+        if (sort.name === data.cases) {
             if (sort.isDescending) {
                 statesData.sort((a, b) => b[1].confirmed - a[1].confirmed)
             } else {
@@ -136,23 +128,6 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     }
 
     const renderWorldCards = () => {
-        // const flagsData = new Map(
-        //     countryFlags.map(({ name, flag }) => [
-        //         name
-        //             .replace(/[". -]/g, '')
-        //             .toLowerCase()
-        //             .split('(')[0],
-        //         flag,
-        //     ]),
-        // )
-        // let flagsFound = {}
-        // console.log(flagsData)
-        // const stats = [...worldCoronaStats]
-        // const index = stats.findIndex((item) => item.country.toUpperCase() === 'INDIA')
-        // const India = stats[index]
-        //
-        // stats.splice(index, 1)
-        // stats.unshift(India)
         return worldCoronaStats.map(({ country, cases, deaths, tests }) => {
             const flag = countryFlagsData[country]
 
@@ -192,8 +167,8 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             {isLoading && <CradleLoader />}
             {!isLoading && <div className="cards-container__progress-bar" />}
             {!isLoading && <div className="cards-container__scroll-path" />}
-            {!isLoading && activeTab === 'World' && renderWorldCards()}
-            {!isLoading && activeTab === 'India' && renderIndiaCards()}
+            {!isLoading && activeTab === TabName.World && renderWorldCards()}
+            {!isLoading && activeTab === TabName.India && renderIndiaCards()}
         </div>
     )
 }
