@@ -1,6 +1,17 @@
+import Utils from '../../utils/utils.js'
+
 const Tab = ({ name, isActive, onTabClick }) => {
+    const getClasses = () => {
+        const classes = new Map([
+            ['nav-item', true],
+            ['active', isActive],
+        ])
+
+        return Utils.classNames(classes)
+    }
+
     return (
-        <li className={`nav-item ${isActive ? 'active' : ''}`}>
+        <li className={getClasses()}>
             <button type="button" className="nav-link" onClick={() => onTabClick(name)}>
                 {name}
             </button>

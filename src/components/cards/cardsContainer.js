@@ -9,7 +9,6 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     const [statesFixedStats, setStatesFixedStats] = React.useState(new Map())
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
     const [statesCoronaStats, setStatesCoronaStats] = React.useState(new Map())
-    const [indiaCoronaStats, setIndiaCoronaStats] = React.useState({})
     const [isLoading, setIsLoading] = React.useState(true)
     // const [countryFlags, setCountryFlags] = React.useState([])
 
@@ -60,7 +59,6 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             setStatesFixedStats(statesStats)
             setWorldCoronaStats(worldStats)
             setStatesCoronaStats(statesStats)
-            setIndiaCoronaStats(India.total_values)
             setIsLoading(false)
             // setCountryFlags(flags)
         })
@@ -165,6 +163,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
                         name={country}
                         cases={cases.total}
                         deaths={deaths.total}
+                        recoveries={cases.recovered}
                         tests={tests.total}
                         flag={flag}
                     />
