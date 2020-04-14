@@ -2,7 +2,9 @@ import { precacheAndRoute } from 'workbox-precaching'
 import { registerRoute } from 'workbox-routing/registerRoute.mjs'
 import { CacheFirst } from 'workbox-strategies/CacheFirst.mjs'
 import { NetworkFirst } from 'workbox-strategies/NetworkFirst.mjs'
+import { StaleWhileRevalidate } from 'workbox-strategies/StaleWhileRevalidate.mjs'
 import { ExpirationPlugin } from 'workbox-expiration/ExpirationPlugin.mjs'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
 precacheAndRoute(self.__WB_MANIFEST)
 
@@ -43,6 +45,28 @@ registerRoute(
         plugins: [
             new ExpirationPlugin({
                 maxAgeSeconds: 6 * 60 * 60, // 6 hours
+            }),
+        ],
+    }),
+)
+
+registerRoute(
+    /^https:\/\/fonts\.googleapis\.com/,
+    new StaleWhileRevalidate({
+        cacheName: 'google-fonts-stylesheets',
+    }),
+)
+
+registerRoute(
+    /^https:\/\/fonts\.gstatic\.com/,
+    new CacheFirst({
+        cacheName: 'google-fonts-webfonts',
+        plugins: [
+            new CacheableResponsePlugin({
+                statuses: [0, 200],
+            }),
+            new ExpirationPlugin({
+                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
             }),
         ],
     }),
