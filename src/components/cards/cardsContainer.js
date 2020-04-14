@@ -58,13 +58,10 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
 
     React.useEffect(() => {
         if (activeTab === TabName.World) {
-            let worldStats = [...worldCoronaStats].filter((item) =>
+            const worldStats = [...worldFixedStats].filter((item) =>
                 item.country.toLowerCase().includes(search.toLowerCase()),
             )
 
-            if (!search) {
-                worldStats = [...worldFixedStats]
-            }
             if (sort.name === data.cases) {
                 if (sort.isDescending) {
                     worldStats.sort((a, b) => b.cases.total - a.cases.total)
@@ -80,13 +77,8 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             return
         }
 
-        let statesData = [...statesCoronaStats.entries()].filter((item) =>
-            item[0].toLowerCase().includes(search.toLowerCase()),
-        )
+        const statesData = [...statesFixedStats].filter((item) => item[0].toLowerCase().includes(search.toLowerCase()))
 
-        if (!search) {
-            statesData = [...statesFixedStats]
-        }
         if (sort.name === data.cases) {
             if (sort.isDescending) {
                 statesData.sort((a, b) => b[1].confirmed - a[1].confirmed)
