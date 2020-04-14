@@ -90,6 +90,9 @@ const App = () => {
                 {renderTotals()}
             </div>
             <CardsContainer activeTab={getActiveTab()} sort={sort} search={search} setTotals={setTotalsReport} />
+            <button type="button" className="update">
+                Click to Update
+            </button>
         </>
     )
 }

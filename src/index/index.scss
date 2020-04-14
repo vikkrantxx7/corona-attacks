@@ -21,3 +21,21 @@ body {
 .header {
   display: flex;
 }
+
+.update {
+  display: none;
+  position: absolute;
+  bottom: 20px;
+  left: calc(50vw - 50px);
+  height: 30px;
+  border-width: 0;
+  border-radius: 10px;
+  color: rgba(241,241,241,0.8);
+  text-shadow: 1px 1px 3px rgba(53,56,61,0.61);
+  background-color: rgba(74, 168, 45, 0.8);
+  cursor: pointer;
+}
+
+.show {
+  display: block;
+}

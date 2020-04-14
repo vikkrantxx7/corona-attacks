@@ -3,9 +3,9 @@ import './totalsReport.scss'
 const TotalsReport = ({ cases, deaths, recoveries }) => {
     return (
         <div className="totals-report">
-            <span>{`Total Cases: ${cases.toLocaleString()}`}</span>
-            <span>{`Total Deaths: ${deaths.toLocaleString()}`}</span>
-            <span>{`Total Recoveries: ${recoveries.toLocaleString()}`}</span>
+            <span>{`Total Cases: ${Number(cases).toLocaleString()}`}</span>
+            <span>{`Total Deaths: ${Number(deaths).toLocaleString()}`}</span>
+            <span>{`Total Recoveries: ${Number(recoveries).toLocaleString()}`}</span>
         </div>
     )
 }

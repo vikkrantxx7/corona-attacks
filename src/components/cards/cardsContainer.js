@@ -154,9 +154,9 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
                 <Card
                     key={stateData.state}
                     name={stateData.state}
-                    cases={stateData.confirmed}
-                    deaths={stateData.deaths}
-                    recoveries={stateData.recovered}
+                    cases={Number(stateData.confirmed)}
+                    deaths={Number(stateData.deaths)}
+                    recoveries={Number(stateData.recovered)}
                 />
             )
         })

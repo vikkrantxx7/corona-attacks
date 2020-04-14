@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const { InjectManifest } = require('workbox-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
@@ -19,6 +20,7 @@ module.exports = {
                     loader: 'babel-loader',
                     options: {
                         presets: [['@babel/preset-env'], ['@babel/preset-react']],
+                        plugins: ['@babel/plugin-transform-runtime'],
                     },
                 },
             },
@@ -30,6 +32,9 @@ module.exports = {
             filename: 'index.html',
             inject: true,
             template: path.resolve(__dirname, '../src/index', 'index.html'),
+        }),
+        new InjectManifest({
+            swSrc: path.resolve(__dirname, '../src/index/serviceWorker.js'),
         }),
         new webpack.ProvidePlugin({
             React: 'react',

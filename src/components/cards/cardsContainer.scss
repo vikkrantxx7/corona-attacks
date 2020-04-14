@@ -35,19 +35,6 @@
   box-shadow: 5px 5px rgba(93, 64, 55, 0.4), 10px 10px rgba(93, 64, 55, 0.3),
   15px 15px rgba(93, 64, 55, 0.2), 0 0 20px rgba(100, 0, 0, 0.4);
 
-  //&:before,
-  //&:after {
-  //  content: '';
-  //  position: absolute;
-  //  top: -2px;
-  //  bottom: -2px;
-  //  left: -2px;
-  //  right: -2px;
-  //  z-index: -1;
-  //  filter: blur(20px);
-  //  background: linear-gradient(235deg, #89ff00, #010615, #00bcd4);
-  //}
-
   @media only screen and (min-width: 768px) {
     width: 220px;
     height: 180px;
@@ -81,11 +68,12 @@
   box-shadow: 0 -2px 5px rgba(53, 56, 61, 0.72), 0 2px 5px rgba(53, 56, 61, 0.72);
   margin-top: 12px;
   color: #f1f1f1;
-  font-size: 15px;
+  font-family: Century, Calibri, sans-serif;
+  font-size: 13px;
   text-shadow: 2px 2px 4px rgb(52, 51, 51);
 
   @media only screen and (min-width: 768px) {
-    font-size: 20px;
+    font-size: 17px;
     margin-top: 30px;
     margin-bottom: 0;
     padding-left: 18px;
@@ -109,6 +97,17 @@
   background: rgba(0, 0, 0, 0.07);
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.3);
 
+  &:before {
+    content: 'By Vikrant \26A1';
+    position: absolute;
+    height: 10px;
+    color: rgba(240, 255, 255, 0.7);
+    font-family: Century, sans-serif;
+    text-shadow: 0 -2px 3px rgba(56, 92, 120, 0.6);
+    top: -13px;
+    left: calc(50vw - 45px);
+  }
+
   @media screen and (min-width: 480px) {
     top: 0;
     right: 0;
@@ -117,6 +116,20 @@
     width: 10px;
     height: 100%;
     box-shadow: -2px 0 4px rgba(0, 0, 0, 0.3);
+
+    &:before {
+      content: 'By Vikrant \26A1';
+      position: absolute;
+      height: 10px;
+      width: 110px;
+      color: rgba(240, 255, 255, 0.7);
+      font-family: Century, sans-serif;
+      text-shadow: 0 -2px 3px rgba(56, 92, 120, 0.6);
+      left: -61px;
+      top: calc(50vh - 20px);
+      text-align: center;
+      transform: rotateZ(270deg);
+    }
   }
 }
 

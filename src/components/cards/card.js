@@ -15,7 +15,9 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
 
     return (
         <div className="card" style={{ backgroundImage: `url(${flag})` }}>
-            <span className="card__name" title={name}>{name}</span>
+            <span className="card__name" title={name}>
+                {name}
+            </span>
             <ul className={getClasses()}>
                 <li>
                     <FontAwesomeIcon icon={faBriefcaseMedical} size="sm" />
@@ -27,16 +29,18 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
                     {labels.deaths}
                     {deaths?.toLocaleString() || 'NA'}
                 </li>
-                {recoveries && <li>
+                <li>
                     <FontAwesomeIcon icon={faHandHoldingHeart} size="sm" />
                     {labels.recoveries}
                     {recoveries?.toLocaleString() || 'NA'}
-                </li>}
-                {tests && <li>
-                    <FontAwesomeIcon icon={faVial} size="sm" />
-                    {labels.tests}
-                    {tests?.toLocaleString()}
-                </li>}
+                </li>
+                {tests && (
+                    <li>
+                        <FontAwesomeIcon icon={faVial} size="sm" />
+                        {labels.tests}
+                        {tests?.toLocaleString()}
+                    </li>
+                )}
             </ul>
         </div>
     )
@@ -50,6 +54,10 @@ Card.propTypes = {
     recoveries: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     tests: PropTypes.number,
     flag: PropTypes.string,
+}
+Card.defaultProps = {
+    tests: '',
+    flag: '',
 }
 
 export default Card

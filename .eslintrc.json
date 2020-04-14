@@ -5,6 +5,7 @@
     "es6": true,
     "node": true
   },
+  "parser": "babel-eslint",
   "extends": ["airbnb", "prettier"],
   "plugins": ["babel", "import", "prettier", "react", "react-hooks", "sort-imports-es6-autofix"],
   "rules": {
