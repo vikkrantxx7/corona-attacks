@@ -2,14 +2,15 @@
   "name": "corona-attacks",
   "version": "1.0.0",
   "description": "Statistics of Covid19 pandemic",
-  "main": "index.js",
-  "scripts": {
-    "build": "webpack --config=webpack\\webpack.config.prod.js",
-    "build-dev": "webpack --config=webpack\\webpack.config.dev.js",
-    "start": "webpack-dev-server --config=webpack\\webpack.config.dev.js --open"
-  },
   "author": "Vikrant Sharma",
   "license": "ISC",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config=webpack\\webpack.config.prod.js --env.presets=serviceworker",
+    "build-dev": "webpack --config=webpack\\webpack.config.dev.js  --env.presets=serviceworker",
+    "start": "node webpack\\dev-server.js --hot=true --port=9100",
+    "start-sw": "node webpack\\dev-server.js --port=9101 --worker=serviceworker"
+  },
   "browserslist": [
     "last 2 versions"
   ],
