@@ -1,9 +1,10 @@
 const merge = require('webpack-merge')
+const webpack = require('webpack')
 const autoPrefixer = require('autoprefixer')
 const commonConfig = require('./webpack.config.common.js')
 const loadPresets = require('./loadPresets.js')
 
-module.exports = ({ presets }) =>
+module.exports = ({ presets, wbLogsOff }) =>
     merge(
         commonConfig,
         {
@@ -36,6 +37,7 @@ module.exports = ({ presets }) =>
                     },
                 ],
             },
+            plugins: [new webpack.DefinePlugin({ WB_LOGS_OFF: wbLogsOff })],
         },
         loadPresets({ presets }),
     )

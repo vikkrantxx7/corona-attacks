@@ -8,6 +8,8 @@ import { CacheableResponsePlugin } from 'workbox-cacheable-response'
 
 precacheAndRoute(self.__WB_MANIFEST)
 
+self.__WB_DISABLE_DEV_LOGS = WB_LOGS_OFF
+
 self.addEventListener('message', (event) => {
     if (event.data.type === 'SKIP_WAITING') {
         self.skipWaiting()
