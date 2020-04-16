@@ -1,4 +1,5 @@
 const merge = require('webpack-merge')
+const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoPrefixer = require('autoprefixer')
 const commonConfig = require('./webpack.config.common.js')
@@ -41,6 +42,7 @@ module.exports = ({ presets }) =>
                 new MiniCssExtractPlugin({
                     filename: '[name].[contenthash].css',
                 }),
+                new webpack.DefinePlugin({ WB_LOGS_OFF: false }),
             ],
         },
         loadPresets({ presets }),
