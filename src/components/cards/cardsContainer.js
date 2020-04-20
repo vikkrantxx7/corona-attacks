@@ -1,10 +1,8 @@
 import './cardsContainer.scss'
-import { FixedSizeList } from 'react-window'
-import AutoSizer from 'react-virtualized-auto-sizer'
 import { data, TabName } from '../../containers/appConstants.js'
 import { RapidAPI, IndiaAPI } from './cardsConstants.js'
+import CardsWindow from './cardsWindow.js'
 import countryFlagsData from '../../data/countrieFlags.json'
-import Card from './card.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
 
 const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
@@ -93,80 +91,25 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
 
     const handleScroll = () => {
         const progressBar = document.getElementsByClassName('cards-container__progress-bar')[0]
-        const listContainer = document.getElementsByClassName('cards-container__list')[0]
+        const listContainer = document.getElementsByClassName('fixed-list')[0]
         const totalHeight = listContainer.scrollHeight - window.innerHeight
         const progressHeight = (listContainer.scrollTop / totalHeight) * 100
 
         progressBar.style.height = `${progressHeight}%`
     }
 
-    const renderRows = (itemsPerRow, stats) => ({ index, style }) => {
-        const items = stats.slice(index * itemsPerRow, index * itemsPerRow + itemsPerRow)
-        return (
-            <div key={index} style={style} className="cards-container__list_row">
-                {items.map((item) => {
-                    return activeTab === TabName.World ? (
-                        <Card
-                            key={item.country}
-                            name={item.country}
-                            cases={item.cases.total}
-                            deaths={item.deaths.total}
-                            recoveries={item.cases.recovered}
-                            tests={item.tests.total}
-                            flag={countryFlagsData[item.country]}
-                        />
-                    ) : (
-                        <Card
-                            key={item.state}
-                            name={item.state}
-                            cases={Number(item.confirmed)}
-                            deaths={Number(item.deaths)}
-                            recoveries={Number(item.recovered)}
-                        />
-                    )
-                })}
-            </div>
-        )
-    }
-
-    const getItemsCountPerRow = (width, itemWidth) => {
-        return Math.max(Math.floor(width / itemWidth), 1)
-    }
-
-    const getRowsCount = (itemsPerRow, itemsCount) => {
-        return Math.ceil(itemsCount / itemsPerRow)
-    }
-
-    const renderCards = (stats) => {
-        return (
-            <AutoSizer>
-                {({ height, width }) => {
-                    const itemsPerRow = getItemsCountPerRow(width, width < 768 ? 188 : 238)
-                    const rowsCount = getRowsCount(itemsPerRow, stats.length)
-
-                    return (
-                        <FixedSizeList
-                            className="cards-container__list"
-                            height={height}
-                            width={width}
-                            itemCount={rowsCount}
-                            itemSize={width < 768 ? 135 : 205}
-                            onScroll={handleScroll}
-                        >
-                            {renderRows(itemsPerRow, stats)}
-                        </FixedSizeList>
-                    )
-                }}
-            </AutoSizer>
-        )
-    }
-
     return (
-        <div className="cards-container" onScroll={handleScroll}>
+        <div className="cards-container">
             {isLoading && <CradleLoader />}
             {!isLoading && <div className="cards-container__progress-bar" />}
             {!isLoading && <div className="cards-container__scroll-path" />}
-            {!isLoading && renderCards(activeTab === TabName.World ? worldCoronaStats : statesCoronaStats)}
+            {!isLoading && (
+                <CardsWindow
+                    stats={activeTab === TabName.World ? worldCoronaStats : statesCoronaStats}
+                    activeTab={activeTab}
+                    onScroll={handleScroll}
+                />
+            )}
         </div>
     )
 }

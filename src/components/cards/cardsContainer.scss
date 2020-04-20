@@ -2,7 +2,7 @@
   height: calc(100vh - 70px);
 }
 
-.cards-container__list {
+.fixed-list {
   scrollbar-width: none;
 
   &::-webkit-scrollbar {
@@ -10,7 +10,7 @@
   }
 }
 
-.cards-container__list_row {
+.fixed-list__row {
   display: flex;
   justify-content: center;
 }
@@ -24,15 +24,12 @@
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 10px;
-  box-shadow: 5px 5px rgba(93, 64, 55, 0.4), 10px 10px rgba(93, 64, 55, 0.3),
-  15px 15px rgba(93, 64, 55, 0.2), 0 0 20px rgba(100, 0, 0, 0.4);
+  box-shadow: 5px 5px rgba(93, 64, 55, 0.4), 10px 10px rgba(93, 64, 55, 0.3),  -5px 5px 20px rgba(100, 0, 0, 0.4);
 
   @media only screen and (min-width: 768px) {
     width: 220px;
     height: 180px;
     margin-top: 20px;
-    box-shadow: 5px 5px rgba(93, 64, 55, 0.4), 10px 10px rgba(93, 64, 55, 0.3),
-    15px 15px rgba(93, 64, 55, 0.2), -5px 5px 20px rgba(100, 0, 0, 0.4);
   }
 }
 
