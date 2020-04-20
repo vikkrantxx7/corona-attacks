@@ -1,5 +1,7 @@
 .cradle-loader {
-  align-self: center;
+  position: absolute;
+  top: calc(50vh - 50px);
+  left: calc(50vw - 56px);
 }
 
 .cradle-loader__swing div {

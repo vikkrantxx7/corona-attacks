@@ -1,10 +1,11 @@
 import './cardsContainer.scss'
+import { FixedSizeList } from 'react-window'
+import AutoSizer from 'react-virtualized-auto-sizer'
 import { data, TabName } from '../../containers/appConstants.js'
 import { RapidAPI, IndiaAPI } from './cardsConstants.js'
 import countryFlagsData from '../../data/countrieFlags.json'
 import Card from './card.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
-import Utils from '../../utils/utils.js'
 
 const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     const [worldFixedStats, setWorldFixedStats] = React.useState([])
@@ -31,6 +32,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             const worldStats = stats.response.sort((a, b) => b.cases.total - a.cases.total)
             const IndiaStats = India.statewise.shift()
             const statesStats = India.statewise
+            const countriesWithFlags = worldStats.filter((item) => countryFlagsData[item.country])
 
             setTotals({
                 World: {
@@ -44,9 +46,9 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
                     recoveries: IndiaStats.recovered,
                 },
             })
-            setWorldFixedStats(worldStats)
+            setWorldFixedStats(countriesWithFlags)
             setStatesFixedStats(statesStats)
-            setWorldCoronaStats(worldStats)
+            setWorldCoronaStats(countriesWithFlags)
             setStatesCoronaStats(statesStats)
             setIsLoading(false)
         })
@@ -89,73 +91,82 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
         setStatesCoronaStats(statesData)
     }, [sort, search])
 
-    const getClasses = () => {
-        const classes = new Map([
-            ['cards-container', true],
-            ['cards-container_justify-loader', isLoading],
-        ])
-
-        return Utils.classNames(classes)
-    }
-
     const handleScroll = () => {
         const progressBar = document.getElementsByClassName('cards-container__progress-bar')[0]
-        const cardsContainer = document.getElementsByClassName('cards-container')[0]
-
-        if (cardsContainer.offsetWidth < 480) {
-            const totalWidth = cardsContainer.scrollWidth - window.innerWidth
-            const progressWidth = (cardsContainer.scrollLeft / totalWidth) * 100
-            progressBar.style.width = `${progressWidth}%`
-            return
-        }
-
-        const totalHeight = cardsContainer.scrollHeight - window.innerHeight
-        const progressHeight = (cardsContainer.scrollTop / totalHeight) * 100
+        const listContainer = document.getElementsByClassName('cards-container__list')[0]
+        const totalHeight = listContainer.scrollHeight - window.innerHeight
+        const progressHeight = (listContainer.scrollTop / totalHeight) * 100
 
         progressBar.style.height = `${progressHeight}%`
     }
 
-    const renderWorldCards = () => {
-        return worldCoronaStats.map(({ country, cases, deaths, tests }) => {
-            const flag = countryFlagsData[country]
-
-            return (
-                !!flag && (
-                    <Card
-                        key={country}
-                        name={country}
-                        cases={cases.total}
-                        deaths={deaths.total}
-                        recoveries={cases.recovered}
-                        tests={tests.total}
-                        flag={flag}
-                    />
-                )
-            )
-        })
+    const renderRows = (itemsPerRow, stats) => ({ index, style }) => {
+        const items = stats.slice(index * itemsPerRow, index * itemsPerRow + itemsPerRow)
+        return (
+            <div key={index} style={style} className="cards-container__list_row">
+                {items.map((item) => {
+                    return activeTab === TabName.World ? (
+                        <Card
+                            key={item.country}
+                            name={item.country}
+                            cases={item.cases.total}
+                            deaths={item.deaths.total}
+                            recoveries={item.cases.recovered}
+                            tests={item.tests.total}
+                            flag={countryFlagsData[item.country]}
+                        />
+                    ) : (
+                        <Card
+                            key={item.state}
+                            name={item.state}
+                            cases={Number(item.confirmed)}
+                            deaths={Number(item.deaths)}
+                            recoveries={Number(item.recovered)}
+                        />
+                    )
+                })}
+            </div>
+        )
     }
 
-    const renderIndiaCards = () => {
-        return statesCoronaStats.map((state) => {
-            return (
-                <Card
-                    key={state.state}
-                    name={state.state}
-                    cases={Number(state.confirmed)}
-                    deaths={Number(state.deaths)}
-                    recoveries={Number(state.recovered)}
-                />
-            )
-        })
+    const getItemsCountPerRow = (width, itemWidth) => {
+        return Math.max(Math.floor(width / itemWidth), 1)
+    }
+
+    const getRowsCount = (itemsPerRow, itemsCount) => {
+        return Math.ceil(itemsCount / itemsPerRow)
+    }
+
+    const renderCards = (stats) => {
+        return (
+            <AutoSizer>
+                {({ height, width }) => {
+                    const itemsPerRow = getItemsCountPerRow(width, width < 768 ? 188 : 238)
+                    const rowsCount = getRowsCount(itemsPerRow, stats.length)
+
+                    return (
+                        <FixedSizeList
+                            className="cards-container__list"
+                            height={height}
+                            width={width}
+                            itemCount={rowsCount}
+                            itemSize={width < 768 ? 135 : 205}
+                            onScroll={handleScroll}
+                        >
+                            {renderRows(itemsPerRow, stats)}
+                        </FixedSizeList>
+                    )
+                }}
+            </AutoSizer>
+        )
     }
 
     return (
-        <div className={getClasses()} onScroll={handleScroll}>
+        <div className="cards-container" onScroll={handleScroll}>
             {isLoading && <CradleLoader />}
             {!isLoading && <div className="cards-container__progress-bar" />}
             {!isLoading && <div className="cards-container__scroll-path" />}
-            {!isLoading && activeTab === TabName.World && renderWorldCards()}
-            {!isLoading && activeTab === TabName.India && renderIndiaCards()}
+            {!isLoading && renderCards(activeTab === TabName.World ? worldCoronaStats : statesCoronaStats)}
         </div>
     )
 }

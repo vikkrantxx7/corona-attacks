@@ -25,6 +25,8 @@
     "react": "^16.13.1",
     "react-debounce-input": "^3.2.2",
     "react-dom": "^16.13.1",
+    "react-virtualized-auto-sizer": "^1.0.2",
+    "react-window": "^1.8.5",
     "workbox-window": "^5.1.2"
   },
   "devDependencies": {
