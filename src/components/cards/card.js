@@ -52,7 +52,7 @@ Card.propTypes = {
     cases: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     deaths: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     recoveries: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    tests: PropTypes.number,
+    tests: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     flag: PropTypes.string,
 }
 Card.defaultProps = {

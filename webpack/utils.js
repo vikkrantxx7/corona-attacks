@@ -2,7 +2,7 @@ module.exports = {
     getProcessArg(argName, defaultValue) {
         const pattern = new RegExp(`--${argName}=(.+)`, 'i')
         const args = process.argv.slice(2)
-        let arg = defaultValue || null
+        let arg = defaultValue
         let match = null
         for (let i = 0, len = args.length; i < len; i += 1) {
             match = args[i].match(pattern)

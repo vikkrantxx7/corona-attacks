@@ -1,6 +1,6 @@
 import './cardsContainer.scss'
 import { data, TabName } from '../../containers/appConstants.js'
-import { RapidAPI } from './cardsConstants.js'
+import { RapidAPI, IndiaAPI } from './cardsConstants.js'
 import countryFlagsData from '../../data/countrieFlags.json'
 import Card from './card.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
@@ -24,17 +24,13 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
         }
 
         const fetchIndiaCoronaStats = () => {
-            return Axios.get(RapidAPI.India.url, {
-                headers: {
-                    'x-rapidapi-host': RapidAPI.India.host,
-                    'x-rapidapi-key': RapidAPI.Key,
-                },
-            })
+            return Axios.get(IndiaAPI.url)
         }
 
         Promise.all([fetchWorldCoronaStats(), fetchIndiaCoronaStats()]).then(([{ data: stats }, { data: India }]) => {
             const worldStats = stats.response.sort((a, b) => b.cases.total - a.cases.total)
-            const statesStats = new Map(Object.entries(India.state_wise))
+            const IndiaStats = India.statewise.shift()
+            const statesStats = India.statewise
 
             setTotals({
                 World: {
@@ -43,9 +39,9 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
                     recoveries: worldStats[0].cases.recovered,
                 },
                 India: {
-                    cases: India.total_values.confirmed,
-                    deaths: India.total_values.deaths,
-                    recoveries: India.total_values.recovered,
+                    cases: IndiaStats.confirmed,
+                    deaths: IndiaStats.deaths,
+                    recoveries: IndiaStats.recovered,
                 },
             })
             setWorldFixedStats(worldStats)
@@ -77,20 +73,20 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             return
         }
 
-        const statesData = [...statesFixedStats].filter((item) => item[0].toLowerCase().includes(search.toLowerCase()))
+        const statesData = statesFixedStats.filter((item) => item.state.toLowerCase().includes(search.toLowerCase()))
 
         if (sort.name === data.cases) {
             if (sort.isDescending) {
-                statesData.sort((a, b) => b[1].confirmed - a[1].confirmed)
+                statesData.sort((a, b) => b.confirmed - a.confirmed)
             } else {
-                statesData.sort((a, b) => a[1].confirmed - b[1].confirmed)
+                statesData.sort((a, b) => a.confirmed - b.confirmed)
             }
         } else if (sort.isDescending) {
-            statesData.sort((a, b) => b[1].deaths - a[1].deaths)
+            statesData.sort((a, b) => b.deaths - a.deaths)
         } else {
-            statesData.sort((a, b) => a[1].deaths - b[1].deaths)
+            statesData.sort((a, b) => a.deaths - b.deaths)
         }
-        setStatesCoronaStats(new Map(statesData))
+        setStatesCoronaStats(statesData)
     }, [sort, search])
 
     const getClasses = () => {
@@ -140,15 +136,14 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     }
 
     const renderIndiaCards = () => {
-        return [...statesCoronaStats.keys()].map((state) => {
-            const stateData = statesCoronaStats.get(state)
+        return statesCoronaStats.map((state) => {
             return (
                 <Card
-                    key={stateData.state}
-                    name={stateData.state}
-                    cases={Number(stateData.confirmed)}
-                    deaths={Number(stateData.deaths)}
-                    recoveries={Number(stateData.recovered)}
+                    key={state.state}
+                    name={state.state}
+                    cases={Number(state.confirmed)}
+                    deaths={Number(state.deaths)}
+                    recoveries={Number(state.recovered)}
                 />
             )
         })

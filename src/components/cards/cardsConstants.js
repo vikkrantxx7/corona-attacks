@@ -3,11 +3,11 @@ export const RapidAPI = {
         host: 'covid-193.p.rapidapi.com',
         url: 'https://covid-193.p.rapidapi.com/statistics',
     },
-    India: {
-        host: 'corona-virus-world-and-india-data.p.rapidapi.com',
-        url: 'https://corona-virus-world-and-india-data.p.rapidapi.com/api_india',
-    },
     Key: '0dc4dc7910msh2f47a2af13bd0c8p1b95a5jsn3acdf8a3b471',
+}
+
+export const IndiaAPI = {
+    url: 'https://api.covid19india.org/data.json',
 }
 
 export const labels = {
