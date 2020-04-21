@@ -1,17 +1,42 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1"/>
-    <meta name="description" content="Covid19 data dashboard.">
-    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://restcountries.eu">
-    <title>Corona Attacks</title>
-</head>
-<body>
-<noscript>Either your browser does not support JavaScript or you have turned it off !!</noscript>
-<div id="app"></div>
-<div id="popover-portal"></div>
-</body>
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <%= htmlWebpackPlugin.tags.headTags %> <!-- this is replaced by meta tags defined in webpack config -->
+        <!-- path of assets to be resolved after the build -->
+        <link rel="apple-touch-icon" sizes="57x57" href="assets/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="60x60" href="assets/apple-touch-icon-60x60.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="assets/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="assets/apple-touch-icon-76x76.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="assets/apple-touch-icon-114x114.png" />
+        <link rel="apple-touch-icon" sizes="120x120" href="assets/apple-touch-icon-120x120.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="assets/apple-touch-icon-144x144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="assets/apple-touch-icon-152x152.png" />
+        <link rel="apple-touch-icon" sizes="167x167" href="assets/apple-touch-icon-167x167.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon-180x180.png" />
+        <link rel="manifest" href="assets/manifest.json" />
+        <link rel="shortcut icon" href="assets/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="48x48" href="assets/favicon-48x48.png" />
+        <link
+            rel="apple-touch-startup-image"
+            media="(orientation: portrait)"
+            href="assets/apple-touch-startup-image-640x1136.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="(orientation: landscape)"
+            href="assets/apple-touch-startup-image-1136x640.png"
+        />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Acme&display=swap" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+        <link rel="preconnect" href="https://restcountries.eu" crossorigin />
+        <title><%= htmlWebpackPlugin.options.title %></title>
+        <%= htmlWebpackPlugin.tags.bodyTags %> <!-- this is replaced by script tag (when inject: false)-->
+    </head>
+    <body>
+        <noscript>Either your browser does not support JavaScript or you have turned it off !!</noscript>
+        <div id="app"></div>
+        <div id="popover-portal"></div>
+    </body>
 </html>

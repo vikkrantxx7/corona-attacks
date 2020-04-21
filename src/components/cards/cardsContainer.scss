@@ -17,19 +17,27 @@
 
 .card {
   position: relative;
-  width: 170px;
+  width: 165px;
   height: 120px;
   align-self: center;
-  margin: 18px 18px 0 0;
+  margin: 12px 12px 0 0;
   background-size: cover;
   background-repeat: no-repeat;
   border-radius: 10px;
-  box-shadow: 5px 5px rgba(93, 64, 55, 0.4), 10px 10px rgba(93, 64, 55, 0.3),  -5px 5px 20px rgba(100, 0, 0, 0.4);
+  box-shadow: 3px 3px rgba(93, 64, 55, 0.4), 6px 6px rgba(93, 64, 55, 0.3),  -3px 3px 15px rgba(100, 0, 0, 0.4);
+
+  @media only screen and (min-width: 420px) and (max-width: 767px){
+    width: 170px;
+    margin-top: 18px;
+    margin-right: 18px;
+    box-shadow: 5px 5px rgba(93, 64, 55, 0.4), 10px 10px rgba(93, 64, 55, 0.3),  -5px 5px 20px rgba(100, 0, 0, 0.4);
+  }
 
   @media only screen and (min-width: 768px) {
     width: 220px;
     height: 180px;
     margin-top: 20px;
+    box-shadow: 5px 5px rgba(93, 64, 55, 0.4), 10px 10px rgba(93, 64, 55, 0.3),  -5px 5px 20px rgba(100, 0, 0, 0.4);
   }
 }
 
@@ -57,7 +65,7 @@
   box-shadow: 0 -2px 5px rgba(53, 56, 61, 0.72), 0 2px 5px rgba(53, 56, 61, 0.72);
   margin-top: 12px;
   color: #f1f1f1;
-  font-family: Century, Calibri, sans-serif;
+  font-family: Georgia, sans-serif;
   font-size: 13px;
   text-shadow: 2px 2px 4px rgb(52, 51, 51);
 

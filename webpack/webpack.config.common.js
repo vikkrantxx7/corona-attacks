@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
@@ -28,50 +28,33 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
+        new CopyPlugin([{ from: 'src/assets/', to: 'assets/' }]),
         new HtmlWebpackPlugin({
-            filename: 'index.html',
-            inject: true,
             template: path.resolve(__dirname, '../src/index', 'index.html'),
+            title: 'Corona Attacks',
+            filename: 'index.html',
+            inject: false,
+            scriptLoading: 'defer',
+            meta: {
+                charset: { charset: 'utf-8' },
+                viewport: 'width=device-width, initial-scale=1, maximum-scale=2, minimum-scale=1',
+                description: 'Covid19 data dashboard.',
+                'mobile-web-app-capable': 'yes',
+                'theme-color': '#ffc40d',
+                'application-name': 'Corona Attacks',
+                'apple-mobile-web-app-capable': 'yes',
+                'apple-mobile-web-app-status-bar-style': 'black-translucent',
+                'apple-mobile-web-app-title': 'Corona Attacks',
+                'msapplication-TileColor': '#ffc40d',
+                'msapplication-TileImage': 'assets/mstile-144x144.png',
+                'msapplication-config': 'assets/browserconfig.xml',
+            },
         }),
         new webpack.ProvidePlugin({
             React: 'react',
             ReactDOM: 'react-dom',
             PropTypes: 'prop-types',
             Axios: 'axios',
-        }),
-        new FaviconsWebpackPlugin({
-            logo: './src/assets/icons/corona-256.png',
-            cache: true,
-            mode: 'webapp',
-            outputPath: './assets',
-            prefix: './assets',
-            publicPath: '.',
-            inject: true,
-            favicons: {
-                appName: 'Corona Attacks',
-                appShortName: 'Corona Attacks',
-                orientation: 'any',
-                display: 'standalone',
-                lang: 'en-US',
-                manifestRelativePaths: true,
-                start_url: '/',
-                background: '#ffc40d',
-                theme_color: '#ffc40d',
-                appleStatusBarStyle: 'black-translucent',
-                logging: false,
-                pixel_art: false,
-                icons: {
-                    android: true,
-                    appleIcon: true,
-                    appleStartup: true,
-                    favicons: true,
-                    firefox: true,
-                    windows: true,
-                    opengraph: false,
-                    twitter: false,
-                    yandex: false,
-                },
-            },
         }),
     ],
     optimization: {

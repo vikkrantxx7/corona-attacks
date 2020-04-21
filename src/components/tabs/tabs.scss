@@ -1,8 +1,12 @@
 .nav {
   display: flex;
   list-style: none;
-  padding-left: 25px;
+  padding-left: 0;
   margin: 0;
+
+  @media screen and (min-width: 420px) {
+    padding-left: 25px;
+  }
 }
 
 .nav-link {

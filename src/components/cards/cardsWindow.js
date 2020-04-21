@@ -57,7 +57,15 @@ const CardsWindow = ({ activeTab, onScroll, stats }) => {
     return (
         <AutoSizer>
             {({ height, width }) => {
-                const itemsPerRow = getItemsCountPerRow(width, width < 768 ? 188 : 238)
+                let itemWidth = 238
+
+                if (width <= 420) {
+                    itemWidth = 177
+                } else if (width <= 767) {
+                    itemWidth = 188
+                }
+
+                const itemsPerRow = getItemsCountPerRow(width, itemWidth)
                 const rowsCount = getRowsCount(itemsPerRow, stats.length)
 
                 return (
