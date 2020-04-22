@@ -1,12 +1,12 @@
 import '../index/index.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
-import { DebounceInput } from 'react-debounce-input'
-import { TabName, data, sortName } from './appConstants.js'
+import { TabName, data, sortName, DEBOUNCE_DELAY } from './appConstants.js'
 import TabsContainer from '../components/tabs/tabsContainer.js'
 import CardsContainer from '../components/cards/cardsContainer.js'
 import Popover from '../components/popover/popover.js'
 import TotalsReport from '../components/totalsReport/totalsReport.js'
+import Utils from '../utils/utils.js'
 
 const App = () => {
     const tabs = [
@@ -22,7 +22,9 @@ const App = () => {
     const [tabsData, setTabsData] = React.useState(tabs)
     const [sort, setSort] = React.useState({ name: data.cases, isDescending: true })
     const [search, setSearch] = React.useState('')
+    const [inputVal, setInputVal] = React.useState('')
     const [totalsReport, setTotalsReport] = React.useState({})
+    const debouncedSearch = React.useRef(Utils.debounce(setSearch, DEBOUNCE_DELAY))
 
     const handleCasesSort = () => {
         setSort({ name: data.cases, isDescending: sort.name === data.cases ? !sort.isDescending : true })
@@ -42,9 +44,9 @@ const App = () => {
         setSearch('')
     }
 
-    const handleSearch = (event) => {
-        const { value } = event.target
-        setSearch(value)
+    const handleOnChange = ({ target: { value } }) => {
+        setInputVal(value)
+        debouncedSearch.current(value)
     }
 
     const getActiveTab = () => {
@@ -77,7 +79,7 @@ const App = () => {
                         <FontAwesomeIcon icon={sort.isDescending ? faAngleDoubleDown : faAngleDoubleUp} size="sm" />
                     )}
                 </button>
-                <DebounceInput onChange={handleSearch} placeholder="Search" debounceTimeout={400} value={search} />
+                <input onChange={handleOnChange} placeholder="Search" value={inputVal} />
             </Popover>
         )
     }

@@ -12,3 +12,5 @@ export const sortName = {
     cases: 'Sort Cases',
     deaths: 'Sort Deaths',
 }
+
+export const DEBOUNCE_DELAY = 400

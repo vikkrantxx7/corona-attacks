@@ -12,7 +12,7 @@ const Tab = ({ name, isActive, onTabClick }) => {
 
     return (
         <li className={getClasses()}>
-            <button type="button" className="nav-link" onClick={() => onTabClick(name)}>
+            <button type="button" className="nav-link" onClick={() => !isActive && onTabClick(name)}>
                 {name}
             </button>
         </li>
