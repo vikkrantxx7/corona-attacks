@@ -47,6 +47,16 @@ module.exports = ({ presets }) =>
             ],
             optimization: {
                 minimizer: [new Terser({ extractComments: false })],
+                splitChunks: {
+                    chunks: 'all',
+                    cacheGroups: {
+                        vendors: {
+                            test: /[\\/]node_modules[\\/]/,
+                            name: 'vendors',
+                            chunks: 'all',
+                        },
+                    },
+                },
             },
         },
         loadPresets({ presets }),
