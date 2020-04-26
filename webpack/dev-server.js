@@ -6,19 +6,32 @@ const devConfig = require('./webpack.config.dev.js')
 
 const port = utils.getProcessArg('port', 9100)
 const hotOnly = utils.getProcessArg('hotOnly', false)
+const hot = utils.getProcessArg('hot', false)
 const worker = utils.getProcessArg('worker', '')
 const wbLogsOff = utils.getProcessArg('logsoff', false)
-const compiler = webpack(devConfig({ presets: `${worker}`, wbLogsOff }))
-const devServerOptions = {
+const analyzer = utils.getProcessArg('analyzer', '')
+const compiler = webpack(devConfig({ presets: `${worker},${analyzer}`, wbLogsOff }))
+let devServerOptions = {
     host: 'localhost',
     contentBase: path.resolve(__dirname, '../dist'),
 }
 
 if (hotOnly) {
-    WebpackDevServer.addDevServerEntrypoints(devConfig({ presets: `${worker}`, wbLogsOff }), {
-        ...devServerOptions,
-        hotOnly: true,
-    })
+    // this will not live reload, hot-only
+    devServerOptions = { ...devServerOptions, hotOnly: true, inline: true }
+    WebpackDevServer.addDevServerEntrypoints(
+        devConfig({ presets: `${worker},${analyzer}`, wbLogsOff }),
+        devServerOptions,
+    )
+}
+
+if (hot) {
+    // this will live reload if not hot updated
+    devServerOptions = { ...devServerOptions, hot: true, inline: true }
+    WebpackDevServer.addDevServerEntrypoints(
+        devConfig({ presets: `${worker},${analyzer}`, wbLogsOff }),
+        devServerOptions,
+    )
 }
 
 new WebpackDevServer(compiler, devServerOptions).listen(port, '0.0.0.0')

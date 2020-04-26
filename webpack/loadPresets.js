@@ -1,14 +1,12 @@
 const webpackMerge = require('webpack-merge')
 
-const loadPresets = ({ presets }) => {
-    if (!presets.length) {
-        return {}
-    }
-
+const loadPresets = ({ presets = '' }) => {
     const mergedPresets = [].concat(...presets.split(','))
-    const mergedConfigs = mergedPresets.map((presetName) => {
-        return require(`./presets/webpack.${presetName}`)()
-    })
+    const mergedConfigs = mergedPresets
+        .filter((presetName) => !!presetName)
+        .map((presetName) => {
+            return require(`./presets/webpack.${presetName}`)()
+        })
 
     return webpackMerge({}, ...mergedConfigs)
 }

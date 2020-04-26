@@ -6,9 +6,9 @@
   "license": "ISC",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config=webpack\\webpack.config.prod.js --env.presets=serviceworker,bundleAnalyzer",
+    "build": "webpack --config=webpack\\webpack.config.prod.js --env.presets=serviceworker",
     "build-dev": "webpack --config=webpack\\webpack.config.dev.js  --env.presets=serviceworker",
-    "start": "node webpack\\dev-server.js --hotOnly=true",
+    "start": "node webpack\\dev-server.js --hot=true",
     "start-sw": "node webpack\\dev-server.js --port=9101 --worker=serviceworker",
     "start-sw-no-logs": "node webpack\\dev-server.js --port=9101  --logsoff=true --worker=serviceworker"
   },

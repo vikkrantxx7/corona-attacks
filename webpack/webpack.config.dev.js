@@ -1,3 +1,4 @@
+const path = require('path')
 const merge = require('webpack-merge')
 const webpack = require('webpack')
 const autoPrefixer = require('autoprefixer')
@@ -10,6 +11,10 @@ module.exports = ({ presets, wbLogsOff }) =>
         {
             mode: 'development',
             devtool: 'inline-source-map',
+            output: {
+                filename: '[name].js',
+                path: path.resolve(__dirname, '../dist'),
+            },
             module: {
                 rules: [
                     {
@@ -37,7 +42,12 @@ module.exports = ({ presets, wbLogsOff }) =>
                     },
                 ],
             },
-            plugins: [new webpack.DefinePlugin({ WB_LOGS_OFF: wbLogsOff })],
+            plugins: [
+                new webpack.DefinePlugin({
+                    WB_LOGS_OFF: wbLogsOff,
+                    SW: (presets && presets.includes('serviceworker')) || false,
+                }),
+            ],
         },
         loadPresets({ presets }),
     )

@@ -4,9 +4,9 @@ const app = document.getElementById('app')
 
 ReactDOM.render(<App />, app)
 
-if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator && SW) {
     const sw = async () => {
-        const { Workbox } = await import('workbox-window')
+        const { Workbox } = await import('workbox-window' /* webpackChunkName: "workBoxWindow" */)
 
         window.addEventListener('load', () => {
             const wb = new Workbox('/serviceWorker.js')
@@ -36,6 +36,11 @@ if ('serviceWorker' in navigator) {
         })
     }
     sw()
+} else {
+    console.log(
+        '%c Service Worker Disabled or Not Supported ',
+        'color: blue; font-size: x-large; background: #CCF1F1F1; border-radius: 10px',
+    )
 }
 
 console.log(
