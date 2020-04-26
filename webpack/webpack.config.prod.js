@@ -12,6 +12,7 @@ module.exports = ({ presets } = {}) =>
         commonConfig,
         {
             mode: 'production',
+            entry: './src/index/index.js',
             devtool: 'source-map',
             output: {
                 filename: '[name].[contenthash].js',
@@ -19,6 +20,17 @@ module.exports = ({ presets } = {}) =>
             },
             module: {
                 rules: [
+                    {
+                        test: /\.js$/,
+                        exclude: /[\\/]node_modules[\\/]/,
+                        use: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [['@babel/preset-env', { modules: false }], ['@babel/preset-react']],
+                                plugins: ['@babel/plugin-transform-runtime'],
+                            },
+                        },
+                    },
                     {
                         test: /\.scss$/,
                         use: [

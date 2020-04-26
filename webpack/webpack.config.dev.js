@@ -10,6 +10,7 @@ module.exports = ({ presets, wbLogsOff }) =>
         commonConfig,
         {
             mode: 'development',
+            entry: ['react-hot-loader/patch', './src/index/index.js'],
             devtool: 'inline-source-map',
             output: {
                 filename: '[name].js',
@@ -17,6 +18,23 @@ module.exports = ({ presets, wbLogsOff }) =>
             },
             module: {
                 rules: [
+                    {
+                        test: /\.js$/,
+                        exclude: /[\\/]node_modules[\\/]/,
+                        use: {
+                            loader: 'babel-loader',
+                            options: {
+                                presets: [['@babel/preset-env', { modules: false }], ['@babel/preset-react']],
+                                plugins: ['react-hot-loader/babel', '@babel/plugin-transform-runtime'],
+                            },
+                        },
+                    },
+                    {
+                        // removes the error for react-hot-dom patch
+                        test: /\.js$/,
+                        include: /[\\/]node_modules[\\/]/,
+                        use: 'react-hot-loader/webpack',
+                    },
                     {
                         test: /\.scss$/,
                         use: [

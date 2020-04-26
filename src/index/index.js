@@ -1,8 +1,29 @@
+import { AppContainer } from 'react-hot-loader'
 import App from '../containers/app.js'
 
 const app = document.getElementById('app')
 
-ReactDOM.render(<App />, app)
+const render = (Component) => {
+    ReactDOM.render(
+        module.hot ? ( // removes console warning in dev mode without hot disabled
+            <AppContainer>
+                <Component />
+            </AppContainer>
+        ) : (
+            <Component />
+        ),
+        app,
+    )
+}
+
+render(App)
+
+// style-loader handles HMR for styles, for react code react-hot-loader is needed
+if (module.hot) {
+    module.hot.accept('../containers/app.js', () => {
+        render(App)
+    })
+}
 
 if ('serviceWorker' in navigator && SW) {
     const sw = async () => {

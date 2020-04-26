@@ -16,6 +16,7 @@ let devServerOptions = {
     contentBase: path.resolve(__dirname, '../dist'),
 }
 
+// no need to add HMR plugin if hot or hotOnly enabled from CLI or here
 if (hotOnly) {
     // this will not live reload, hot-only
     devServerOptions = { ...devServerOptions, hotOnly: true, inline: true }

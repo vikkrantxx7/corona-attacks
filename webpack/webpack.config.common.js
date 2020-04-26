@@ -6,22 +6,6 @@ const CopyPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
-    entry: './src/index/index.js',
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /[\\/]node_modules[\\/]/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: [['@babel/preset-env', { modules: false }], ['@babel/preset-react']],
-                        plugins: ['@babel/plugin-transform-runtime'],
-                    },
-                },
-            },
-        ],
-    },
     plugins: [
         new CleanWebpackPlugin(),
         new CopyPlugin([{ from: 'src/assets/', to: 'assets/' }]),
