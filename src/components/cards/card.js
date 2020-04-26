@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSkullCrossbones, faBriefcaseMedical, faVial, faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons'
 import { labels } from './cardsConstants.js'
 import Utils from '../../utils/utils.js'
+import ShootingStars from '../shootingStars/shootingStars.js'
 
 const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
     const getClasses = () => {
@@ -15,6 +16,7 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
 
     return (
         <div className="card" style={{ backgroundImage: `url(${flag})` }}>
+            <ShootingStars starsCount={3} />
             <span className="card__name" title={name}>
                 {name}
             </span>

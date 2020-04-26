@@ -5,7 +5,7 @@ const ShootingStars = ({ starsCount }) => {
         return Array.from({ length: starsCount }, (_, index) => <i className="shooting-star" key={index} />)
     }
 
-    return <>{renderStars()}</>
+    return <div className="stars-container">{renderStars()}</div>
 }
 
 ShootingStars.displayName = 'ShootingStars'
