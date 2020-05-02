@@ -7,9 +7,9 @@ import countryFlagsData from '../../data/countrieFlags.json'
 
 const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     const [worldFixedStats, setWorldFixedStats] = React.useState([])
-    const [statesFixedStats, setStatesFixedStats] = React.useState(new Map())
+    const [statesFixedStats, setStatesFixedStats] = React.useState([])
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
-    const [statesCoronaStats, setStatesCoronaStats] = React.useState(new Map())
+    const [statesCoronaStats, setStatesCoronaStats] = React.useState([])
     const [isLoading, setIsLoading] = React.useState(true)
 
     React.useEffect(() => {
@@ -54,7 +54,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
 
     React.useEffect(() => {
         if (activeTab === TabName.World) {
-            const worldStats = [...worldFixedStats].filter((item) =>
+            const worldStats = worldFixedStats.filter((item) =>
                 item.country.toLowerCase().includes(search.toLowerCase()),
             )
 
