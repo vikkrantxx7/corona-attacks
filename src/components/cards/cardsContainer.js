@@ -50,7 +50,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             setStatesCoronaStats(statesStats)
             setIsLoading(false)
         })
-    }, [])
+    }, [setTotals])
 
     React.useEffect(() => {
         if (activeTab === TabName.World) {
@@ -87,7 +87,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             statesData.sort((a, b) => a.deaths - b.deaths)
         }
         setStatesCoronaStats(statesData)
-    }, [sort, search])
+    }, [activeTab, statesFixedStats, worldFixedStats, sort, search])
 
     const handleScroll = () => {
         const progressBar = document.getElementsByClassName('cards-container__progress-bar')[0]
