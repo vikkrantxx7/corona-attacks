@@ -1,9 +1,9 @@
 import './cardsContainer.scss'
-import { data, TabName } from '../../containers/appConstants.js'
-import { RapidAPI, IndiaAPI } from './cardsConstants.js'
+import { IndiaAPI, RapidAPI } from './cardsConstants.js'
+import { TabName, data } from '../../containers/appConstants.js'
 import CardsWindow from './cardsWindow.js'
-import countryFlagsData from '../../data/countrieFlags.json'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
+import countryFlagsData from '../../data/countrieFlags.json'
 
 const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     const [worldFixedStats, setWorldFixedStats] = React.useState([])

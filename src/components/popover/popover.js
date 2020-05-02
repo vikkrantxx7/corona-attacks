@@ -17,8 +17,10 @@ const Popover = ({ children }) => {
             const dimensions = popoverRef.current.getBoundingClientRect()
             // center align the tooltip by taking both the target and tooltip widths into account
             styl.left = dimensions.left + dimensions.width / 2 - width / 2
-            styl.left = Math.max(space, styl.left) // make sure it doesn't poke off the left side of the page
-            styl.left = Math.min(styl.left, document.body.clientWidth - width - space) // or off the right
+            // make sure it doesn't poke off the left side of the page
+            styl.left = Math.max(space, styl.left)
+            // or off the right
+            styl.left = Math.min(styl.left, document.body.clientWidth - width - space)
             styl.top = dimensions.top + dimensions.height + space
 
             setStyle(styl)

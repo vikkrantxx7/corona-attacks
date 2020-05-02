@@ -1,8 +1,8 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSkullCrossbones, faBriefcaseMedical, faVial, faHandHoldingHeart } from '@fortawesome/free-solid-svg-icons'
+import { faBriefcaseMedical, faHandHoldingHeart, faSkullCrossbones, faVial } from '@fortawesome/free-solid-svg-icons'
 import { labels } from './cardsConstants.js'
-import Utils from '../../utils/utils.js'
 import ShootingStars from '../shootingStars/shootingStars.js'
+import Utils from '../../utils/utils.js'
 
 const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
     const getClasses = () => {

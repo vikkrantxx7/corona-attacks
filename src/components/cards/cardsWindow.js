@@ -1,6 +1,6 @@
-import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
 import { TabName } from '../../containers/appConstants.js'
+import AutoSizer from 'react-virtualized-auto-sizer'
 import Card from './card.js'
 import countryFlagsData from '../../data/countrieFlags.json'
 
@@ -43,11 +43,13 @@ const CardsWindow = ({ activeTab, onScroll, stats }) => {
     }
 
     // for padding at the bootom of the list (inner element is the div that contains the absolute divs)
+    // eslint-disable-next-line react/display-name,react/prop-types
     const innerElementType = React.forwardRef(({ style, ...rest }, ref) => (
         <div
             ref={ref}
             style={{
                 ...style,
+                // eslint-disable-next-line react/prop-types
                 height: `${parseFloat(style.height) + 15}px`,
             }}
             {...rest}

@@ -1,10 +1,10 @@
-import { precacheAndRoute } from 'workbox-precaching'
-import { registerRoute } from 'workbox-routing/registerRoute.mjs'
 import { CacheFirst } from 'workbox-strategies/CacheFirst.mjs'
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'
+import { ExpirationPlugin } from 'workbox-expiration/ExpirationPlugin.mjs'
 import { NetworkFirst } from 'workbox-strategies/NetworkFirst.mjs'
 import { StaleWhileRevalidate } from 'workbox-strategies/StaleWhileRevalidate.mjs'
-import { ExpirationPlugin } from 'workbox-expiration/ExpirationPlugin.mjs'
-import { CacheableResponsePlugin } from 'workbox-cacheable-response'
+import { precacheAndRoute } from 'workbox-precaching'
+import { registerRoute } from 'workbox-routing/registerRoute.mjs'
 
 precacheAndRoute(self.__WB_MANIFEST)
 
@@ -22,7 +22,8 @@ registerRoute(
         cacheName: 'flags',
         plugins: [
             new ExpirationPlugin({
-                maxAgeSeconds: 7 * 24 * 60 * 60, // 1 week
+                // 1 week
+                maxAgeSeconds: 7 * 24 * 60 * 60,
             }),
         ],
     }),
@@ -34,7 +35,8 @@ registerRoute(
         cacheName: 'world',
         plugins: [
             new ExpirationPlugin({
-                maxAgeSeconds: 6 * 60 * 60, // 6 hours
+                // 6 hours
+                maxAgeSeconds: 6 * 60 * 60,
             }),
         ],
     }),
@@ -46,7 +48,8 @@ registerRoute(
         cacheName: 'india',
         plugins: [
             new ExpirationPlugin({
-                maxAgeSeconds: 6 * 60 * 60, // 6 hours
+                // 6 hours
+                maxAgeSeconds: 6 * 60 * 60,
             }),
         ],
     }),
@@ -68,7 +71,8 @@ registerRoute(
                 statuses: [0, 200],
             }),
             new ExpirationPlugin({
-                maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                // 1 year
+                maxAgeSeconds: 60 * 60 * 24 * 365,
             }),
         ],
     }),

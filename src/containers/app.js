@@ -1,10 +1,10 @@
 import '../index/index.scss'
+import { DEBOUNCE_DELAY, TabName, data, sortName } from './appConstants.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
-import { TabName, data, sortName, DEBOUNCE_DELAY } from './appConstants.js'
-import TabsContainer from '../components/tabs/tabsContainer.js'
 import CardsContainer from '../components/cards/cardsContainer.js'
 import Popover from '../components/popover/popover.js'
+import TabsContainer from '../components/tabs/tabsContainer.js'
 import TotalsReport from '../components/totalsReport/totalsReport.js'
 import Utils from '../utils/utils.js'
 
@@ -37,7 +37,12 @@ const App = () => {
     const handleTabClick = (tabName) => {
         setTabsData(
             tabsData.map((tab) => {
-                return tab.name === tabName ? { name: tab.name, isActive: true } : { name: tab.name, isActive: false }
+                return tab.name === tabName
+                    ? { name: tab.name, isActive: true }
+                    : {
+                          name: tab.name,
+                          isActive: false,
+                      }
             }),
         )
         setSort({ name: data.cases, isDescending: true })
@@ -49,9 +54,7 @@ const App = () => {
         debouncedSearch.current(value)
     }
 
-    const getActiveTab = () => {
-        return tabsData.find((tab) => tab.isActive).name
-    }
+    const getActiveTab = () => tabsData.find((tab) => tab.isActive).name
 
     // eslint-disable-next-line react/display-name
     const renderTotals = () => {
@@ -100,4 +103,5 @@ const App = () => {
 }
 
 App.displayName = 'App'
+
 export default App

@@ -5,6 +5,7 @@ const loadPresets = ({ presets = '' }) => {
     const mergedConfigs = mergedPresets
         .filter((presetName) => !!presetName)
         .map((presetName) => {
+            // eslint-disable-next-line global-require
             return require(`./presets/webpack.${presetName}`)()
         })
 

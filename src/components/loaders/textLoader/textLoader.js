@@ -1,3 +1,4 @@
+/* eslint-disable react/no-this-in-sfc */
 import './textLoader.scss'
 
 const TextLoader = () => {
@@ -55,22 +56,22 @@ const TextLoader = () => {
             }
 
             for (let k = 0, m = points.length; k < m; k += 1) {
-                if (points[k] === this) continue
-
-                const d = Math.sqrt((this.x - points[k].x) ** 2 + (this.y - points[k].y) ** 2)
-                if (d < 5) {
-                    ctx.lineWidth = 0.2
-                    ctx.beginPath()
-                    ctx.moveTo(this.x, this.y)
-                    ctx.lineTo(points[k].x, points[k].y)
-                    ctx.stroke()
-                }
-                if (d < 20) {
-                    ctx.lineWidth = 0.1
-                    ctx.beginPath()
-                    ctx.moveTo(this.x, this.y)
-                    ctx.lineTo(points[k].x, points[k].y)
-                    ctx.stroke()
+                if (points[k] !== this) {
+                    const d = Math.sqrt((this.x - points[k].x) ** 2 + (this.y - points[k].y) ** 2)
+                    if (d < 5) {
+                        ctx.lineWidth = 0.2
+                        ctx.beginPath()
+                        ctx.moveTo(this.x, this.y)
+                        ctx.lineTo(points[k].x, points[k].y)
+                        ctx.stroke()
+                    }
+                    if (d < 20) {
+                        ctx.lineWidth = 0.1
+                        ctx.beginPath()
+                        ctx.moveTo(this.x, this.y)
+                        ctx.lineTo(points[k].x, points[k].y)
+                        ctx.stroke()
+                    }
                 }
             }
 
@@ -148,6 +149,7 @@ const TextLoader = () => {
         }
     }, [])
 
+    // eslint-disable-next-line react/self-closing-comp
     return <canvas ref={canvas} className="text-loader"></canvas>
 }
 
