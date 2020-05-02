@@ -10,9 +10,11 @@ export const IndiaAPI = {
     url: 'https://api.covid19india.org/data.json',
 }
 
+export const space = '\xa0'
+
 export const labels = {
-    cases: '\xa0\xa0Cases:\xa0\xa0',
-    deaths: '\xa0\xa0Deaths:\xa0\xa0',
-    recoveries: '\xa0\xa0Recoveries:\xa0\xa0',
-    tests: '\xa0\xa0Tests:\xa0\xa0',
+    cases: `${space}${space}Cases:${space}${space}`,
+    deaths: `${space}${space}Deaths:${space}${space}`,
+    recoveries: `${space}${space}Recoveries:${space}${space}`,
+    tests: `${space}${space}Tests:${space}${space}`,
 }

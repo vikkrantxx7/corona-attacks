@@ -56,9 +56,29 @@ const App = () => {
         const { India, World } = totalsReport
 
         if (getActiveTab() === TabName.World) {
-            return World && <TotalsReport cases={World.cases} deaths={World.deaths} recoveries={World.recoveries} />
+            return (
+                World && (
+                    <TotalsReport
+                        cases={World.cases}
+                        deaths={World.deaths}
+                        recoveries={World.recoveries}
+                        newCases={World.newCases}
+                        newDeaths={World.newDeaths}
+                    />
+                )
+            )
         }
-        return India && <TotalsReport cases={India.cases} deaths={India.deaths} recoveries={India.recoveries} />
+        return (
+            India && (
+                <TotalsReport
+                    cases={India.cases}
+                    deaths={India.deaths}
+                    recoveries={India.recoveries}
+                    newCases={India.newCases}
+                    newDeaths={India.newDeaths}
+                />
+            )
+        )
     }
 
     // eslint-disable-next-line react/display-name

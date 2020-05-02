@@ -27,6 +27,8 @@ const CardsWindow = ({ activeTab, onScroll, stats }) => {
                             recoveries={item.cases.recovered}
                             tests={item.tests.total}
                             flag={isScrolling ? '' : countryFlagsData[item.country]}
+                            newCases={Number(item.cases.new)}
+                            newDeaths={Number(item.deaths.new)}
                         />
                     ) : (
                         <Card
@@ -35,6 +37,8 @@ const CardsWindow = ({ activeTab, onScroll, stats }) => {
                             cases={Number(item.confirmed)}
                             deaths={Number(item.deaths)}
                             recoveries={Number(item.recovered)}
+                            newCases={Number(item.deltaconfirmed)}
+                            newDeaths={Number(item.deltadeaths)}
                         />
                     )
                 })}

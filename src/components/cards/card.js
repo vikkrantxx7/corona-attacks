@@ -1,10 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBriefcaseMedical, faHandHoldingHeart, faSkullCrossbones, faVial } from '@fortawesome/free-solid-svg-icons'
-import { labels } from './cardsConstants.js'
+import {
+    faArrowUp,
+    faBriefcaseMedical,
+    faHandHoldingHeart,
+    faSkullCrossbones,
+    faVial,
+} from '@fortawesome/free-solid-svg-icons'
+import { labels, space } from './cardsConstants.js'
 import ShootingStars from '../shootingStars/shootingStars.js'
 import Utils from '../../utils/utils.js'
 
-const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
+const Card = ({ name, cases, deaths, tests, recoveries, flag, newCases, newDeaths }) => {
     const getClasses = () => {
         const classes = new Map([
             ['card__list', true],
@@ -12,6 +18,19 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
         ])
 
         return Utils.classNames(classes)
+    }
+
+    // eslint-disable-next-line react/display-name
+    const getNewCount = (count, color) => {
+        return (
+            count && (
+                <>
+                    {`${space}${space}`}
+                    <FontAwesomeIcon color={color} icon={faArrowUp} size="sm" />
+                    {`${space}${count.toLocaleString()}`}
+                </>
+            )
+        )
     }
 
     return (
@@ -25,11 +44,13 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
                     <FontAwesomeIcon color="#c9e305" icon={faBriefcaseMedical} size="sm" />
                     {labels.cases}
                     {cases?.toLocaleString()}
+                    {getNewCount(newCases, '#c9e305')}
                 </li>
                 <li>
                     <FontAwesomeIcon color="#ff2205" icon={faSkullCrossbones} size="sm" />
                     {labels.deaths}
                     {deaths?.toLocaleString() || 'NA'}
+                    {getNewCount(newDeaths, '#ff2205')}
                 </li>
                 <li>
                     <FontAwesomeIcon color="#05e374" icon={faHandHoldingHeart} size="sm" />
@@ -51,11 +72,13 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
 Card.displayName = 'Cards'
 Card.propTypes = {
     name: PropTypes.string.isRequired,
-    cases: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    deaths: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    recoveries: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
-    tests: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+    cases: PropTypes.number.isRequired,
+    deaths: PropTypes.number.isRequired,
+    recoveries: PropTypes.number.isRequired,
+    tests: PropTypes.number,
     flag: PropTypes.string,
+    newCases: PropTypes.number.isRequired,
+    newDeaths: PropTypes.number.isRequired,
 }
 Card.defaultProps = {
     tests: '',

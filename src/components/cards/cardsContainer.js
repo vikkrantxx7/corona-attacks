@@ -37,11 +37,15 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
                     cases: worldStats[0].cases.total,
                     deaths: worldStats[0].deaths.total,
                     recoveries: worldStats[0].cases.recovered,
+                    newCases: worldStats[0].cases.new,
+                    newDeaths: worldStats[0].deaths.new,
                 },
                 India: {
                     cases: IndiaStats.confirmed,
                     deaths: IndiaStats.deaths,
                     recoveries: IndiaStats.recovered,
+                    newCases: IndiaStats.deltaconfirmed,
+                    newDeaths: IndiaStats.deltadeaths,
                 },
             })
             setWorldFixedStats(countriesWithFlags)
