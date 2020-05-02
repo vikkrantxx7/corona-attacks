@@ -36,14 +36,9 @@ const App = () => {
 
     const handleTabClick = (tabName) => {
         setTabsData(
-            tabsData.map((tab) => {
-                return tab.name === tabName
-                    ? { name: tab.name, isActive: true }
-                    : {
-                          name: tab.name,
-                          isActive: false,
-                      }
-            }),
+            tabsData.map((tab) =>
+                tab.name === tabName ? { name: tab.name, isActive: true } : { name: tab.name, isActive: false },
+            ),
         )
         setSort({ name: data.cases, isDescending: true })
         setSearch('')
