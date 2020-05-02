@@ -22,23 +22,23 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag }) => {
             </span>
             <ul className={getClasses()}>
                 <li>
-                    <FontAwesomeIcon icon={faBriefcaseMedical} size="sm" />
+                    <FontAwesomeIcon color="#c9e305" icon={faBriefcaseMedical} size="sm" />
                     {labels.cases}
                     {cases?.toLocaleString()}
                 </li>
                 <li>
-                    <FontAwesomeIcon icon={faSkullCrossbones} size="sm" />
+                    <FontAwesomeIcon color="#ff2205" icon={faSkullCrossbones} size="sm" />
                     {labels.deaths}
                     {deaths?.toLocaleString() || 'NA'}
                 </li>
                 <li>
-                    <FontAwesomeIcon icon={faHandHoldingHeart} size="sm" />
+                    <FontAwesomeIcon color="#05e374" icon={faHandHoldingHeart} size="sm" />
                     {labels.recoveries}
                     {recoveries?.toLocaleString() || 'NA'}
                 </li>
                 {tests && (
                     <li>
-                        <FontAwesomeIcon icon={faVial} size="sm" />
+                        <FontAwesomeIcon color="#05d4e3" icon={faVial} size="sm" />
                         {labels.tests}
                         {tests?.toLocaleString()}
                     </li>
