@@ -7,7 +7,7 @@ const TotalsReport = ({ cases, deaths, recoveries, newDeaths, newCases }) => {
     // eslint-disable-next-line react/display-name
     const getNewCount = (count, color) => {
         return (
-            count && (
+            !!count && (
                 <>
                     {`${space}${space}`}
                     <FontAwesomeIcon color={color} icon={faArrowUp} size="sm" />

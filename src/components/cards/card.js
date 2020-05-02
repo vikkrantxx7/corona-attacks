@@ -23,7 +23,7 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag, newCases, newDeath
     // eslint-disable-next-line react/display-name
     const getNewCount = (count, color) => {
         return (
-            count && (
+            !!count && (
                 <>
                     {`${space}${space}`}
                     <FontAwesomeIcon color={color} icon={faArrowUp} size="sm" />
