@@ -5,7 +5,7 @@ import CardsWindow from './cardsWindow.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
 import countryFlagsData from '../../data/countrieFlags.json'
 
-const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
+const CardsContainer = React.forwardRef(({ activeTab, sort, search, setTotals }, ref) => {
     const [worldFixedStats, setWorldFixedStats] = React.useState([])
     const [statesFixedStats, setStatesFixedStats] = React.useState([])
     const [worldCoronaStats, setWorldCoronaStats] = React.useState([])
@@ -103,7 +103,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
     }
 
     return (
-        <div className="cards-container">
+        <div ref={ref} className="cards-container">
             {isLoading && <CradleLoader />}
             {!isLoading && <div className="cards-container__progress-bar" />}
             {!isLoading && <div className="cards-container__scroll-path" />}
@@ -116,7 +116,7 @@ const CardsContainer = ({ activeTab, sort, search, setTotals }) => {
             )}
         </div>
     )
-}
+})
 
 CardsContainer.displayName = 'CardsContainer'
 CardsContainer.propTypes = {

@@ -57,7 +57,7 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag, newCases, newDeath
                     {labels.recoveries}
                     {recoveries?.toLocaleString() || 'NA'}
                 </li>
-                {tests && (
+                {!!tests && (
                     <li>
                         <FontAwesomeIcon color="#05d4e3" icon={faVial} size="sm" />
                         {labels.tests}
@@ -81,7 +81,7 @@ Card.propTypes = {
     newDeaths: PropTypes.number.isRequired,
 }
 Card.defaultProps = {
-    tests: '',
+    tests: 0,
     flag: '',
 }
 

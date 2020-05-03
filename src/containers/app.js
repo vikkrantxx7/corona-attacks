@@ -25,6 +25,43 @@ const App = () => {
     const [inputVal, setInputVal] = React.useState('')
     const [totalsReport, setTotalsReport] = React.useState({})
     const debouncedSearch = React.useRef(Utils.debounce(setSearch, DEBOUNCE_DELAY))
+    const cardsContainer = React.useRef(null)
+
+    const getActiveTab = () => tabsData.find((tab) => tab.isActive).name
+
+    React.useEffect(() => {
+        const elem = cardsContainer.current
+        let startPos = 0
+        const start = (event) => {
+            startPos = event.changedTouches.item(0).clientX
+        }
+        const end = (event) => {
+            if (event.changedTouches.item(0).clientX < startPos && getActiveTab() === TabName.World) {
+                setTabsData(
+                    tabsData.map(({ name }) =>
+                        name === TabName.World ? { name, isActive: false } : { name, isActive: true },
+                    ),
+                )
+            } else if (event.changedTouches.item(0).clientX > startPos && getActiveTab() === TabName.India) {
+                setTabsData(
+                    tabsData.map(({ name }) =>
+                        name === TabName.India ? { name, isActive: false } : { name, isActive: true },
+                    ),
+                )
+            }
+        }
+        // eslint-disable-next-line no-unused-expressions
+        elem?.addEventListener('touchstart', start)
+        // eslint-disable-next-line no-unused-expressions
+        elem?.addEventListener('touchend', end)
+
+        return () => {
+            // eslint-disable-next-line no-unused-expressions
+            elem?.removeEventListener('touchstart', start)
+            // eslint-disable-next-line no-unused-expressions
+            elem?.removeEventListener('touchend', end)
+        }
+    })
 
     const handleCasesSort = () => {
         setSort({ name: data.cases, isDescending: sort.name === data.cases ? !sort.isDescending : true })
@@ -36,9 +73,7 @@ const App = () => {
 
     const handleTabClick = (tabName) => {
         setTabsData(
-            tabsData.map((tab) =>
-                tab.name === tabName ? { name: tab.name, isActive: true } : { name: tab.name, isActive: false },
-            ),
+            tabsData.map(({ name }) => (name === tabName ? { name, isActive: true } : { name, isActive: false })),
         )
         setSort({ name: data.cases, isDescending: true })
         setSearch('')
@@ -48,8 +83,6 @@ const App = () => {
         setInputVal(value)
         debouncedSearch.current(value)
     }
-
-    const getActiveTab = () => tabsData.find((tab) => tab.isActive).name
 
     // eslint-disable-next-line react/display-name
     const renderTotals = () => {
@@ -109,7 +142,13 @@ const App = () => {
                 {renderPopover()}
                 {renderTotals()}
             </div>
-            <CardsContainer activeTab={getActiveTab()} sort={sort} search={search} setTotals={setTotalsReport} />
+            <CardsContainer
+                ref={cardsContainer}
+                activeTab={getActiveTab()}
+                sort={sort}
+                search={search}
+                setTotals={setTotalsReport}
+            />
             <button type="button" className="update">
                 Click to Update
             </button>
