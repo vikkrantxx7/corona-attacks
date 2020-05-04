@@ -31,18 +31,33 @@ const App = () => {
 
     React.useEffect(() => {
         const elem = cardsContainer.current
-        let startPos = 0
+        let startPosX = 0
+        let startPosY = 0
         const start = (event) => {
-            startPos = event.changedTouches.item(0).clientX
+            startPosX = event.changedTouches.item(0).clientX
+            startPosY = event.changedTouches.item(0).clientY
         }
         const end = (event) => {
-            if (event.changedTouches.item(0).clientX < startPos && getActiveTab() === TabName.World) {
+            const endPosX = event.changedTouches.item(0).clientX
+            const endPosY = event.changedTouches.item(0).clientY
+
+            if (
+                endPosX < startPosX &&
+                Math.abs(endPosX - startPosX) > 50 &&
+                Math.abs(endPosY - startPosY) < 50 &&
+                getActiveTab() === TabName.World
+            ) {
                 setTabsData(
                     tabsData.map(({ name }) =>
                         name === TabName.World ? { name, isActive: false } : { name, isActive: true },
                     ),
                 )
-            } else if (event.changedTouches.item(0).clientX > startPos && getActiveTab() === TabName.India) {
+            } else if (
+                endPosX > startPosX &&
+                Math.abs(endPosX - startPosX) > 50 &&
+                Math.abs(endPosY - startPosY) < 50 &&
+                getActiveTab() === TabName.India
+            ) {
                 setTabsData(
                     tabsData.map(({ name }) =>
                         name === TabName.India ? { name, isActive: false } : { name, isActive: true },
