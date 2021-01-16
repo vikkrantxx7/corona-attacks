@@ -3,6 +3,7 @@ import { DEBOUNCE_DELAY, TabName, data, sortName } from './appConstants.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
 import CardsContainer from '../components/cards/cardsContainer.js'
+import IconsInfoBar from '../components/iconsInfoBar.js'
 import Popover from '../components/popover/popover.js'
 import TabsContainer from '../components/tabs/tabsContainer.js'
 import TotalsReport from '../components/totalsReport/totalsReport.js'
@@ -157,6 +158,7 @@ const App = () => {
                 {renderPopover()}
                 {renderTotals()}
             </div>
+            <IconsInfoBar />
             <CardsContainer
                 ref={cardsContainer}
                 activeTab={getActiveTab()}

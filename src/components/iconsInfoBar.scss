@@ -1,0 +1,16 @@
+.icon-info-bar {
+    display: flex;
+    list-style-type: none;
+    color: #f1f1f1;
+    font-family: Georgia, sans-serif;
+    font-size: 16px;
+    text-shadow: 2px 2px 4px rgb(52, 51, 51);
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0;
+
+    li:not(:first-child) {
+        margin-left: 10px;
+    }
+}

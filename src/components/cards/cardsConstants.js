@@ -13,8 +13,8 @@ export const IndiaAPI = {
 export const space = '\xa0'
 
 export const labels = {
-    cases: `${space}${space}Cases:${space}${space}`,
-    deaths: `${space}${space}Deaths:${space}${space}`,
-    recoveries: `${space}${space}Recoveries:${space}${space}`,
-    tests: `${space}${space}Tests:${space}${space}`,
+    cases: `${space}:${space}${space}Cases`,
+    deaths: `${space}:${space}${space}Deaths`,
+    recoveries: `${space}:${space}${space}Recoveries`,
+    tests: `${space}:${space}${space}Tests`,
 }

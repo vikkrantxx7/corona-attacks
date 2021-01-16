@@ -6,7 +6,7 @@ import {
     faSkullCrossbones,
     faVial,
 } from '@fortawesome/free-solid-svg-icons'
-import { labels, space } from './cardsConstants.js'
+import { space } from './cardsConstants.js'
 import ShootingStars from '../shootingStars/shootingStars.js'
 import Utils from '../../utils/utils.js'
 
@@ -42,25 +42,25 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag, newCases, newDeath
             <ul className={getClasses()}>
                 <li>
                     <FontAwesomeIcon color="#c9e305" icon={faBriefcaseMedical} size="sm" />
-                    {labels.cases}
+                    {`${space}${space}`}
                     {cases?.toLocaleString()}
                     {getNewCount(newCases, '#c9e305')}
                 </li>
                 <li>
                     <FontAwesomeIcon color="#ff2205" icon={faSkullCrossbones} size="sm" />
-                    {labels.deaths}
+                    {`${space}${space}`}
                     {deaths?.toLocaleString() || 'NA'}
                     {getNewCount(newDeaths, '#ff2205')}
                 </li>
                 <li>
                     <FontAwesomeIcon color="#05e374" icon={faHandHoldingHeart} size="sm" />
-                    {labels.recoveries}
+                    {`${space}${space}`}
                     {recoveries?.toLocaleString() || 'NA'}
                 </li>
                 {!!tests && (
                     <li>
                         <FontAwesomeIcon color="#05d4e3" icon={faVial} size="sm" />
-                        {labels.tests}
+                        {`${space}${space}`}
                         {tests?.toLocaleString()}
                     </li>
                 )}
