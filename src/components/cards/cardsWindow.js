@@ -1,5 +1,5 @@
 import { FixedSizeList } from 'react-window'
-import { TabName } from '../../containers/appConstants.js'
+import { TAB_NAME } from '../../containers/appConstants.js'
 import AutoSizer from 'react-virtualized-auto-sizer'
 import Card from './card.js'
 import countryFlagsData from '../../data/countrieFlags.json'
@@ -18,7 +18,7 @@ const CardsWindow = ({ activeTab, onScroll, stats }) => {
         return (
             <div key={index} style={style} className="fixed-list__row">
                 {items.map((item) => {
-                    return activeTab === TabName.World ? (
+                    return activeTab === TAB_NAME.World ? (
                         <Card
                             key={item.country}
                             name={item.country}

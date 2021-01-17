@@ -1,8 +1,9 @@
 import './cardsContainer.scss'
+import { DATA, TAB_NAME } from '../../containers/appConstants.js'
 import { IndiaAPI, RapidAPI } from './cardsConstants.js'
-import { TabName, data } from '../../containers/appConstants.js'
 import CardsWindow from './cardsWindow.js'
 import CradleLoader from '../loaders/cradleLoader/cradleLoader.js'
+import Utils from '../../utils/utils.js'
 import countryFlagsData from '../../data/countrieFlags.json'
 
 const CardsContainer = React.forwardRef(({ activeTab, sort, search, setTotals }, ref) => {
@@ -56,42 +57,60 @@ const CardsContainer = React.forwardRef(({ activeTab, sort, search, setTotals },
         })
     }, [setTotals])
 
+    const handleSort = React.useCallback(
+        Utils.memoizeSort((data, type, sortName, isDescending) => {
+            if (sortName === DATA.cases && isDescending) {
+                data.sort((a, b) => {
+                    if (type === TAB_NAME.World) {
+                        return b.cases.total - a.cases.total
+                    }
+                    return b.confirmed - a.confirmed
+                })
+            } else if (sortName === DATA.cases) {
+                data.sort((a, b) => {
+                    if (type === TAB_NAME.World) {
+                        return a.cases.total - b.cases.total
+                    }
+                    return a.confirmed - b.confirmed
+                })
+            } else if (isDescending) {
+                data.sort((a, b) => {
+                    if (type === TAB_NAME.World) {
+                        return b.deaths.total - a.deaths.total
+                    }
+                    return b.deaths - a.deaths
+                })
+            } else {
+                data.sort((a, b) => {
+                    if (type === TAB_NAME.World) {
+                        return a.deaths.total - b.deaths.total
+                    }
+                    return a.deaths - b.deaths
+                })
+            }
+
+            return data
+        }),
+        [],
+    )
+
     React.useEffect(() => {
-        if (activeTab === TabName.World) {
+        if (!statesFixedStats.length || !worldFixedStats.length) {
+            return
+        }
+        if (activeTab === TAB_NAME.World) {
             const worldStats = worldFixedStats.filter((item) =>
                 item.country.toLowerCase().includes(search.toLowerCase()),
             )
 
-            if (sort.name === data.cases) {
-                if (sort.isDescending) {
-                    worldStats.sort((a, b) => b.cases.total - a.cases.total)
-                } else {
-                    worldStats.sort((a, b) => a.cases.total - b.cases.total)
-                }
-            } else if (sort.isDescending) {
-                worldStats.sort((a, b) => b.deaths.total - a.deaths.total)
-            } else {
-                worldStats.sort((a, b) => a.deaths.total - b.deaths.total)
-            }
-            setWorldCoronaStats(worldStats)
+            setWorldCoronaStats(handleSort(worldStats, TAB_NAME.World, sort.name, sort.isDescending))
             return
         }
 
         const statesData = statesFixedStats.filter((item) => item.state.toLowerCase().includes(search.toLowerCase()))
 
-        if (sort.name === data.cases) {
-            if (sort.isDescending) {
-                statesData.sort((a, b) => b.confirmed - a.confirmed)
-            } else {
-                statesData.sort((a, b) => a.confirmed - b.confirmed)
-            }
-        } else if (sort.isDescending) {
-            statesData.sort((a, b) => b.deaths - a.deaths)
-        } else {
-            statesData.sort((a, b) => a.deaths - b.deaths)
-        }
-        setStatesCoronaStats(statesData)
-    }, [activeTab, statesFixedStats, worldFixedStats, sort, search])
+        setStatesCoronaStats(handleSort(statesData, TAB_NAME.India, sort.name, sort.isDescending))
+    }, [activeTab, statesFixedStats, worldFixedStats, sort, search, handleSort])
 
     const handleScroll = () => {
         const progressBar = document.getElementsByClassName('cards-container__progress-bar')[0]
@@ -109,7 +128,7 @@ const CardsContainer = React.forwardRef(({ activeTab, sort, search, setTotals },
             {!isLoading && <div className="cards-container__scroll-path" />}
             {!isLoading && (
                 <CardsWindow
-                    stats={activeTab === TabName.World ? worldCoronaStats : statesCoronaStats}
+                    stats={activeTab === TAB_NAME.World ? worldCoronaStats : statesCoronaStats}
                     activeTab={activeTab}
                     onScroll={handleScroll}
                 />

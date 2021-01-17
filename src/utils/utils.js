@@ -45,9 +45,23 @@ const Utils = (() => {
         return deBouncedFunction
     }
 
+    const memoizeSort = (func) => {
+        const cache = {}
+
+        return (data, type, sortName, isDescending) => {
+            const key = `${type}_${sortName}_${isDescending}`
+            if (!cache[key]) {
+                cache[key] = func(data, type, sortName, isDescending)
+                return cache[key]
+            }
+            return cache[key]
+        }
+    }
+
     return {
         classNames,
         debounce,
+        memoizeSort,
     }
 })()
 

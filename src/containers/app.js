@@ -1,5 +1,5 @@
 import '../index/index.scss'
-import { DEBOUNCE_DELAY, TabName, data, sortName } from './appConstants.js'
+import { DATA, DEBOUNCE_DELAY, SORT_NAME, TAB_NAME } from './appConstants.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleDoubleDown, faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons'
 import CardsContainer from '../components/cards/cardsContainer.js'
@@ -12,16 +12,16 @@ import Utils from '../utils/utils.js'
 const App = () => {
     const tabs = [
         {
-            name: TabName.World,
+            name: TAB_NAME.World,
             isActive: true,
         },
         {
-            name: TabName.India,
+            name: TAB_NAME.India,
             isActive: false,
         },
     ]
     const [tabsData, setTabsData] = React.useState(tabs)
-    const [sort, setSort] = React.useState({ name: data.cases, isDescending: true })
+    const [sort, setSort] = React.useState({ name: DATA.cases, isDescending: true })
     const [search, setSearch] = React.useState('')
     const [inputVal, setInputVal] = React.useState('')
     const [totalsReport, setTotalsReport] = React.useState({})
@@ -46,22 +46,22 @@ const App = () => {
                 endPosX < startPosX &&
                 Math.abs(endPosX - startPosX) > 50 &&
                 Math.abs(endPosY - startPosY) < 50 &&
-                getActiveTab() === TabName.World
+                getActiveTab() === TAB_NAME.World
             ) {
                 setTabsData(
                     tabsData.map(({ name }) =>
-                        name === TabName.World ? { name, isActive: false } : { name, isActive: true },
+                        name === TAB_NAME.World ? { name, isActive: false } : { name, isActive: true },
                     ),
                 )
             } else if (
                 endPosX > startPosX &&
                 Math.abs(endPosX - startPosX) > 50 &&
                 Math.abs(endPosY - startPosY) < 50 &&
-                getActiveTab() === TabName.India
+                getActiveTab() === TAB_NAME.India
             ) {
                 setTabsData(
                     tabsData.map(({ name }) =>
-                        name === TabName.India ? { name, isActive: false } : { name, isActive: true },
+                        name === TAB_NAME.India ? { name, isActive: false } : { name, isActive: true },
                     ),
                 )
             }
@@ -80,18 +80,18 @@ const App = () => {
     })
 
     const handleCasesSort = () => {
-        setSort({ name: data.cases, isDescending: sort.name === data.cases ? !sort.isDescending : true })
+        setSort({ name: DATA.cases, isDescending: sort.name === DATA.cases ? !sort.isDescending : true })
     }
 
     const handleDeathsSort = () => {
-        setSort({ name: data.deaths, isDescending: sort.name === data.deaths ? !sort.isDescending : true })
+        setSort({ name: DATA.deaths, isDescending: sort.name === DATA.deaths ? !sort.isDescending : true })
     }
 
     const handleTabClick = (tabName) => {
         setTabsData(
             tabsData.map(({ name }) => (name === tabName ? { name, isActive: true } : { name, isActive: false })),
         )
-        setSort({ name: data.cases, isDescending: true })
+        setSort({ name: DATA.cases, isDescending: true })
         setSearch('')
     }
 
@@ -104,7 +104,7 @@ const App = () => {
     const renderTotals = () => {
         const { India, World } = totalsReport
 
-        if (getActiveTab() === TabName.World) {
+        if (getActiveTab() === TAB_NAME.World) {
             return (
                 World && (
                     <TotalsReport
@@ -135,14 +135,14 @@ const App = () => {
         return (
             <Popover>
                 <button type="button" onClick={handleCasesSort}>
-                    <span>{`${sortName.cases}  `}</span>
-                    {sort.name === data.cases && (
+                    <span>{`${SORT_NAME.cases}  `}</span>
+                    {sort.name === DATA.cases && (
                         <FontAwesomeIcon icon={sort.isDescending ? faAngleDoubleDown : faAngleDoubleUp} size="sm" />
                     )}
                 </button>
                 <button type="button" onClick={handleDeathsSort}>
-                    <span>{`${sortName.deaths}  `}</span>
-                    {sort.name === data.deaths && (
+                    <span>{`${SORT_NAME.deaths}  `}</span>
+                    {sort.name === DATA.deaths && (
                         <FontAwesomeIcon icon={sort.isDescending ? faAngleDoubleDown : faAngleDoubleUp} size="sm" />
                     )}
                 </button>

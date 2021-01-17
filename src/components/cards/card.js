@@ -61,7 +61,7 @@ const Card = ({ name, cases, deaths, tests, recoveries, flag, newCases, newDeath
                     <li>
                         <FontAwesomeIcon color="#05d4e3" icon={faVial} size="sm" />
                         {`${space}${space}`}
-                        {tests?.toLocaleString()}
+                        {tests.toLocaleString()}
                     </li>
                 )}
             </ul>
@@ -73,16 +73,20 @@ Card.displayName = 'Cards'
 Card.propTypes = {
     name: PropTypes.string.isRequired,
     cases: PropTypes.number.isRequired,
-    deaths: PropTypes.number.isRequired,
-    recoveries: PropTypes.number.isRequired,
+    deaths: PropTypes.number,
+    recoveries: PropTypes.number,
     tests: PropTypes.number,
     flag: PropTypes.string,
-    newCases: PropTypes.number.isRequired,
-    newDeaths: PropTypes.number.isRequired,
+    newCases: PropTypes.number,
+    newDeaths: PropTypes.number,
 }
 Card.defaultProps = {
     tests: 0,
     flag: '',
+    recoveries: 0,
+    deaths: 0,
+    newCases: 0,
+    newDeaths: 0,
 }
 
 export default Card

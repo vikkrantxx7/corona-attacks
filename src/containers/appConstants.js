@@ -1,14 +1,14 @@
-export const TabName = {
+export const TAB_NAME = {
     India: 'India',
     World: 'World',
 }
 
-export const data = {
+export const DATA = {
     cases: 'cases',
     deaths: 'deaths',
 }
 
-export const sortName = {
+export const SORT_NAME = {
     cases: 'Sort Cases',
     deaths: 'Sort Deaths',
 }
