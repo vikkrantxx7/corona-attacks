@@ -20,14 +20,14 @@ const TotalsReport = ({ cases, deaths, recoveries, newDeaths, newCases }) => {
     return (
         <div className="totals-report">
             <span>
-                {`Total Cases: ${Number(cases).toLocaleString()}`}
+                {`All Cases: ${Number(cases).toLocaleString()}`}
                 {getNewCount(newCases, '#c9e305')}
             </span>
             <span>
-                {`Total Deaths: ${Number(deaths).toLocaleString()}`}
+                {`All Deaths: ${Number(deaths).toLocaleString()}`}
                 {getNewCount(newDeaths, '#ff2205')}
             </span>
-            <span>{`Total Recoveries: ${Number(recoveries).toLocaleString()}`}</span>
+            <span>{`All Recoveries: ${Number(recoveries).toLocaleString()}`}</span>
         </div>
     )
 }
