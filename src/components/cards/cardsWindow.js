@@ -13,7 +13,7 @@ const CardsWindow = ({ activeTab, onScroll, stats }) => {
         return Math.ceil(itemsCount / itemsPerRow)
     }
 
-    const renderRows = (itemsPerRow, statistics) => ({ isScrolling, index, style }) => {
+    const renderRows = (itemsPerRow, statistics) => ({ index, style }) => {
         const items = statistics.slice(index * itemsPerRow, index * itemsPerRow + itemsPerRow)
         return (
             <div key={index} style={style} className="fixed-list__row">
@@ -26,7 +26,7 @@ const CardsWindow = ({ activeTab, onScroll, stats }) => {
                             deaths={item.deaths.total}
                             recoveries={item.cases.recovered}
                             tests={item.tests.total}
-                            flag={isScrolling ? '' : countryFlagsData[item.country]}
+                            flag={countryFlagsData[item.country]}
                             newCases={Number(item.cases.new)}
                             newDeaths={Number(item.deaths.new)}
                         />

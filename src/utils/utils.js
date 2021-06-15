@@ -48,8 +48,8 @@ const Utils = (() => {
     const memoizeSort = (func) => {
         const cache = {}
 
-        return (data, type, sortName, isDescending) => {
-            const key = `${type}_${sortName}_${isDescending}`
+        return (data, type, sortName, isDescending, search) => {
+            const key = `${type}_${sortName}_${isDescending}_${search}`
             if (!cache[key]) {
                 cache[key] = func(data, type, sortName, isDescending)
                 return cache[key]

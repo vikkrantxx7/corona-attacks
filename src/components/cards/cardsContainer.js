@@ -103,13 +103,15 @@ const CardsContainer = React.forwardRef(({ activeTab, sort, search, setTotals },
                 item.country.toLowerCase().includes(search.toLowerCase()),
             )
 
-            setWorldCoronaStats(handleSort(worldStats, TAB_NAME.World, sort.name, sort.isDescending))
+            setWorldCoronaStats(
+                handleSort(worldStats, TAB_NAME.World, sort.name, sort.isDescending, search.toLowerCase()),
+            )
             return
         }
 
         const statesData = statesFixedStats.filter((item) => item.state.toLowerCase().includes(search.toLowerCase()))
 
-        setStatesCoronaStats(handleSort(statesData, TAB_NAME.India, sort.name, sort.isDescending))
+        setStatesCoronaStats(handleSort(statesData, TAB_NAME.India, sort.name, sort.isDescending, search.toLowerCase()))
     }, [activeTab, statesFixedStats, worldFixedStats, sort, search, handleSort])
 
     const handleScroll = () => {
