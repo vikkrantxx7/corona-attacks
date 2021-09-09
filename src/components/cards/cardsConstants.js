@@ -7,7 +7,7 @@ export const RapidAPI = {
 }
 
 export const IndiaAPI = {
-    url: 'https://api.covid19india.org/data.json',
+    url: 'https://data.covid19india.org/data.json',
 }
 
 export const space = '\xa0'
